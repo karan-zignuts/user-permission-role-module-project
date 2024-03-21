@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ModuleController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +29,56 @@ Route::get('/page-2', $controller_path . '\pages\Page2@index')->name('pages-page
 Route::get('/pages/misc-error', $controller_path . '\pages\MiscError@index')->name('pages-misc-error');
 
 // authentication
-Route::get('/auth/login-basic', $controller_path . '\authentications\LoginBasic@index')->name('auth-login-basic');
+// Route::get('/auth/login-basic', $controller_path . '\authentications\LoginBasic@index')->name('auth-login-basic');
 Route::get('/auth/register-basic', $controller_path . '\authentications\RegisterBasic@index')->name('auth-register-basic');
+
+Route::get('/auth/login-basic', $controller_path . '\authentications\LoginBasic@index')->name('auth-login-basic');
+Route::post('/auth/login-basic', $controller_path . '\authentications\LoginBasic@login')->name('auth-login-basic.post');
+
+
+// //permissions
+// Route::get('permissions', [PermissionController::class,'index'])->name('permissions.index');
+// Route::post('/permissions', [PermissionController::class,'store'])->name('permissions.store');
+// Route::get('/permissions/create', [PermissionController::class,'create'])->name('permissions.create');
+// Route::get('/permissions/edit/{id}', [PermissionController::class,'edit'])->name('permissions.edit');
+// Route::put('/permissions/{id}', [PermissionController::class,'update'])->name('permissions.update');
+// Route::delete('/permissions/{id}', [PermissionController::class,'destroy'])->name('permissions.destroy');
+
+//permissions
+Route::controller(PermissionController::class)->group(function () {
+  Route::get('permissions', 'index')->name('permissions.index');
+  Route::post('/permissions', 'store')->name('permissions.store');
+  Route::get('/permissions/create','create')->name('permissions.create');
+  Route::get('/permissions/edit/{id}','edit')->name('permissions.edit');
+  Route::put('/permissions/{id}','update')->name('permissions.update');
+  Route::delete('/permissions/{id}','destroy')->name('permissions.destroy');
+});
+
+//Modules
+
+
+Route::get('/modules', [ModuleController::class, 'index'])->name('modules.index');
+Route::get('/modules/edit/{module}', [ModuleController::class, 'edit'])->name('modules.edit');
+Route::put('/modules/{module}', [ModuleController::class, 'update'])->name('modules.update');
+Route::get('changeStatus', [ModuleController::class, 'changeStatus']);
+
+
+// Route::group(['prefix' => 'auth'], function () {
+//   Route::post('login', [AuthController::class, 'login']);
+//   Route::post('register', [AuthController::class, 'register']);
+
+//   Route::group(['middleware' => 'auth:sanctum'], function () {
+//       Route::get('logout', [AuthController::class, 'logout']);
+//       Route::get('user', [AuthController::class, 'user']);
+//   });
+// });
+
+
+// Route::get('login', [AuthController::class, 'login'])->name('auth.login');
+// Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+// Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
+// Route::middleware('auth:sanctum')->get('/user', 'AuthController@user');
+// Route::middleware('auth:sanctum')->post('/logout', 'AuthController@logout');
+
+// Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+// Route::post('/login', [AuthController::class, 'login'])->name('login.submit');

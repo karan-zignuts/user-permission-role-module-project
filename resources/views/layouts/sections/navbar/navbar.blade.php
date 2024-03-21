@@ -66,7 +66,7 @@ $navbarDetached = ($navbarDetached ?? '');
                         @if (Auth::check())
                         {{ Auth::user()->name }}
                         @else
-                        John Doe
+                        John bgthbtt
                         @endif
                       </span>
                       <small class="text-muted">Admin</small>
