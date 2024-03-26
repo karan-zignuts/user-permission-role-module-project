@@ -4,69 +4,6 @@ $configData = Helper::appClasses();
 @endphp
 
 @extends('../layouts/layoutMaster')
-
-{{-- @section('content')
-<div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title">Module Management</h4>
-      </div>
-      <div class="card-body">
-        <!-- Search bar -->
-        <form action="{{ route('modules.index') }}" method="GET" class="mb-2">
-          <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Search by name" value="{{ request('search') }}">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="submit">Search</button>
-            </div>
-          </div>
-        </form>
-        <!-- Filter -->
-        <form action="{{ route('modules.index') }}" method="GET" class="mb-2">
-          <div class="input-group">
-            <select name="status" class="form-control">
-              <option value="">All Modules</option>
-              <option value="1" {{ request('status') == 1 ? 'selected' : '' }}>Active Modules</option>
-              <option value="0" {{ request('status') == 0 ? 'selected' : '' }}>Deactivated Modules</option>
-            </select>
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="submit">Filter</button>
-            </div>
-          </div>
-        </form>
-        <!-- Module List -->
-        @if($modules->count() > 0)
-        <div class="list-group">
-          @foreach ($modules as $module)
-          <div class="list-group-item">
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <h5 class="mb-0">{{ $module->name }}</h5>
-                <p class="mb-0">{{ $module->description }}</p>
-              </div>
-              <div class="ml-auto">
-                <a href="{{ route('modules.edit', $module) }}" class="btn btn-sm btn-primary">Edit</a>
-              </div>
-            </div>
-          </div>
-          @endforeach
-        </div>
-        @else
-        <div class="alert alert-info" role="alert">
-          No modules found.
-        </div>
-        @endif
-        <!-- Pagination -->
-        <div class="d-flex justify-content-center mt-3">
-          {{ $modules->links() }}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-@endsection --}}
-
 @section('content')
 <div class="row">
   <div class="col-12">
@@ -75,52 +12,52 @@ $configData = Helper::appClasses();
         <h4 class="card-title">Module Management</h4>
       </div>
       <div class="card-body">
-        <!-- Search bar -->
-        <form action="{{ route('modules.index') }}" method="GET" class="mb-2">
-          <div class="input-group">
-            <input type="text" name="search" class="form-control" placeholder="Search by name" value="{{ request('search') }}">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="submit">Search</button>
-            </div>
+          <form action="{{ route('modules.index') }}" method="GET" class="mb-4">
+          <div class="row">
+              <div class="col-md-4">
+                  <input type="text" name="search" class="form-control" placeholder="Search..." value="{{ request()->input('search') }}">
+              </div>
+              <div class="col-md-3">
+                  <select name="status" class="form-control">
+                      <option value="all" {{ request()->input('status') == 'all' ? 'selected' : '' }}>All</option>
+                      <option value="active" {{ request()->input('status') == 'active' ? 'selected' : '' }}>Active</option>
+                      <option value="inactive" {{ request()->input('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                  </select>
+              </div>
+              <div class="col-md-2">
+                  <button type="submit" class="btn btn-primary">Filter</button>
+              </div>
           </div>
-        </form>
-        <!-- Filter -->
-        <form action="{{ route('modules.index') }}" method="GET" class="mb-2">
-          <div class="input-group">
-            <select name="status" class="form-control">
-              <option value="">All </option>
-              <option value="1" {{ request('status') == 1 ? 'selected' : '' }}>Active </option>
-              <option value="0" {{ request('status') == 0 ? 'selected' : '' }}>Deactivated </option>
-            </select>
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="submit">Filter</button>
-            </div>
-          </div>
-        </form>
+      </form>
         <!-- Module List -->
         @if($modules->count() > 0)
-        <div class="list-group">
-          @foreach ($modules as $module)
-          <div class="list-group-item">
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <h5 class="mb-0">{{ $module->name }}</h5>
-                <p class="mb-0">{{ $module->description }}</p>
-              </div>
-              <div class="ml-auto">
-                <!-- Toggle switch -->
-                <input type="checkbox" data-toggle="toggle" data-on="Active" data-off="Deactivated" data-onstyle="success" data-offstyle="danger" {{ $module->is_active ? 'checked' : '' }} data-id="{{ $module->id }}" class="toggle-class">
-                <a href="{{ route('modules.edit', $module) }}" class="btn btn-sm btn-primary ml-2">Edit</a>
-              </div>
-            </div>
+          <div class="table-responsive">
+              <table class="table table-bordered">
+                  <thead>
+                      <tr>
+                          <th>Name</th>
+                          <th>Description</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @foreach ($modules as $module)
+                      <tr>
+                          <td>{{ $module->name }}</td>
+                          <td>{{ $module->description }}</td>
+                          <td>
+                              <a href="{{ route('modules.edit', $module) }}" class="btn btn-sm btn-primary ml-2">Edit</a>
+                          </td>
+                      </tr>
+                      @endforeach
+                  </tbody>
+              </table>
           </div>
-          @endforeach
-        </div>
-        @else
-        <div class="alert alert-info" role="alert">
-          No modules found.
-        </div>
-        @endif
+          @else
+          <div class="alert alert-info" role="alert">
+              No modules found.
+          </div>
+          @endif
         <!-- Pagination -->
         <div class="d-flex justify-content-center mt-3">
           {{ $modules->links() }}
@@ -130,22 +67,3 @@ $configData = Helper::appClasses();
   </div>
 </div>
 @endsection
-
-<script>
-
-$(function() {
-           $('.toggle-class').change(function() {
-           var status = $(this).prop('checked') == true ? 1 : 0;
-           var product_id = $(this).data('id');
-           $.ajax({
-               type: "GET",
-               dataType: "json",
-               url: '/status/update',
-               data: {'status': status, 'product_id': product_id},
-               success: function(data){
-               console.log(data.success)
-            }
-         });
-      })
-   });
-</script>

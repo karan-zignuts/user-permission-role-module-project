@@ -17,6 +17,10 @@ return new class extends Migration
             $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
             $table->string('module_code');
             $table->foreign('module_code')->references('code')->on('modules')->onDelete('cascade');
+            $table->boolean('create')->default(false);
+            $table->boolean('edit')->default(false);
+            $table->boolean('view')->default(false);
+            $table->boolean('delete')->default(false);
             $table->timestamps();
             $table->softDeletes();
             $table->string('created_by')->nullable();

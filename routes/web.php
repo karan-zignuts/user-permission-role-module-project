@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\RoleController;
 
 
 
@@ -36,14 +37,6 @@ Route::get('/auth/login-basic', $controller_path . '\authentications\LoginBasic@
 Route::post('/auth/login-basic', $controller_path . '\authentications\LoginBasic@login')->name('auth-login-basic.post');
 
 
-// //permissions
-// Route::get('permissions', [PermissionController::class,'index'])->name('permissions.index');
-// Route::post('/permissions', [PermissionController::class,'store'])->name('permissions.store');
-// Route::get('/permissions/create', [PermissionController::class,'create'])->name('permissions.create');
-// Route::get('/permissions/edit/{id}', [PermissionController::class,'edit'])->name('permissions.edit');
-// Route::put('/permissions/{id}', [PermissionController::class,'update'])->name('permissions.update');
-// Route::delete('/permissions/{id}', [PermissionController::class,'destroy'])->name('permissions.destroy');
-
 //permissions
 Route::controller(PermissionController::class)->group(function () {
   Route::get('permissions', 'index')->name('permissions.index');
@@ -52,15 +45,40 @@ Route::controller(PermissionController::class)->group(function () {
   Route::get('/permissions/edit/{id}','edit')->name('permissions.edit');
   Route::put('/permissions/{id}','update')->name('permissions.update');
   Route::delete('/permissions/{id}','destroy')->name('permissions.destroy');
+  // Route::post('/toggle-status/{id}','toggleStatus')->name('permissions.toggleStatus');
+  Route::post('/permissions/toggleStatus/{permission_id}', 'toggleStatus')->name('permissions.toggleStatus');
+
+
+  // Route::get('/toggle-status/{permission_id}/{status}', 'toggleStatus')->name('permissions.toggle-status');
+
+
 });
 
 //Modules
-
-
 Route::get('/modules', [ModuleController::class, 'index'])->name('modules.index');
 Route::get('/modules/edit/{module}', [ModuleController::class, 'edit'])->name('modules.edit');
 Route::put('/modules/{module}', [ModuleController::class, 'update'])->name('modules.update');
 Route::get('changeStatus', [ModuleController::class, 'changeStatus']);
+
+//roles
+Route::controller(RoleController::class)->group(function (){
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
+    Route::post('/roles/store', [RoleController::class, 'store'])->name('roles.store');
+    Route::get('/roles/edit/{id}', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::put('/roles/update/{id}', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
+  });
+
+
+
+// Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
+// Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
+// Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
+// Route::get('/permissions/edit/{permission}', [PermissionController::class, 'edit'])->name('permissions.edit');
+// Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
+// Route::put('/permissions/{id}', [PermissionController::class, 'update'])->name('permissions.update');
+// Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 
 
 // Route::group(['prefix' => 'auth'], function () {

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->string('code')->primary();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->string('parent_code')->nullable(); // Assuming parent_code is a string, adjust as needed
+            $table->string('parent_code')->nullable();
+            $table->foreign('parent_code')->references('code')->on('modules')->onDelete('cascade');
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();

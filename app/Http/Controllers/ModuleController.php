@@ -10,19 +10,13 @@ class ModuleController extends Controller
   {
     $query = Module::query();
 
-    // Filter by module name
     if ($request->has('search')) {
       $query->where('name', 'like', '%' . $request->input('search') . '%');
-    }
+  }
 
-    // Filter by active/deactivated modules
-    if ($request->has('status')) {
-      $status = $request->input('status');
-      if ($status !== '') {
-        $query->where('is_active', $status);
-      }
-    }
-
+  if ($request->has('status') && $request->input('status') != 'all') {
+      $query->where('is_active', $request->input('status') == 'active' ? 1 : 0);
+  }
     $modules = $query->paginate(10);
 
     return view('modules.index', compact('modules'));
@@ -47,12 +41,12 @@ class ModuleController extends Controller
 
     return redirect()->route('modules.index')->with('success', 'Module updated successfully.');
   }
-  public function changeStatus(Request $request)
-  {
-      $module = Module::find($request->module_code);
-      $module->is_active = $request->is_active;
-      $module->save();
+  // public function changeStatus(Request $request)
+  // {
+  //     $module = Module::find($request->module_code);
+  //     $module->is_active = $request->is_active;
+  //     $module->save();
 
-      return response()->json(['success'=>'Status change successfully.']);
-  }
+  //     return response()->json(['success'=>'Status change successfully.']);
+  // }
 }
