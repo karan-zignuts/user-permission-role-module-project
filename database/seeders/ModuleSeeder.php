@@ -50,5 +50,9 @@ class ModuleSeeder extends Seeder
                         'description' => 'Sub module',
                         'parent_code' => '2'
                       ]);
-    }
+
+    $contact->children()->saveMany([$company, $people]);
+    $account->children()->saveMany([$notes, $activityLog, $meetings]);
+
+  }
 }

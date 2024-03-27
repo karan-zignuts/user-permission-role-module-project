@@ -80,18 +80,14 @@
     </div>
     <script>
       $(document).ready(function () {
-          // Get the CSRF token value from the meta tag
           var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
           $('.toggle-class').change(function () {
               var status = $(this).prop('checked') == true ? 1 : 0;
               var permission_id = $(this).data('permission-id');
-
               $.ajax({
                   type: "POST",
                   dataType: "json",
                   url: '{{ route('permissions.toggleStatus', ':permission_id') }}'.replace(':permission_id', permission_id),
-                  // Include the CSRF token in the request headers
                   headers: {
                       'X-CSRF-TOKEN': CSRF_TOKEN
                   },

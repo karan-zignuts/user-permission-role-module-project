@@ -44,36 +44,33 @@
                                     <tbody>
                                         <!-- Inside your Blade template -->
                                         @foreach ($modules as $module)
-                                        {{ dd($module); }}
                                             <tr>
                                                 <td>{{ $module->name }}</td>
                                                 <td><input type="checkbox" class="selectAll"
-                                                        data-target="module{{ $module->id }}"> Select All</td>
-                                                <td><input type="checkbox" name="permissions[{{ $module->id }}][create]"
-                                                        class="permissionCheckbox module{{ $module->id }}" value="create"
-                                                        {{ $permission->hasPermission($module->id, 'create') ? 'checked' : '' }}>
+                                                        data-target="module{{ $module->code }}"> Select All</td>
+                                                <td><input type="checkbox" name="permissions[{{ $module->code }}][create]"
+                                                        class="permissionCheckbox module{{ $module->code }}" value="create"
+                                                        {{ $permission->hasPermission($module->code, 'create') ? 'checked' : '' }}>
                                                 </td>
-                                                <td><input type="checkbox" name="permissions[{{ $module->id }}][edit]"
-                                                        class="permissionCheckbox module{{ $module->id }}" value="edit"
-                                                        {{ $permission->hasPermission($module->id, 'edit') ? 'checked' : '' }}>
+                                                <td><input type="checkbox" name="permissions[{{ $module->code }}][edit]"
+                                                        class="permissionCheckbox module{{ $module->code }}" value="edit"
+                                                        {{ $permission->hasPermission($module->code, 'edit') ? 'checked' : '' }}>
                                                 </td>
-                                                <td><input type="checkbox" name="permissions[{{ $module->id }}][view]"
-                                                        class="permissionCheckbox module{{ $module->id }}" value="view"
-                                                        {{ $permission->hasPermission($module->id, 'view') ? 'checked' : '' }}>
+                                                <td><input type="checkbox" name="permissions[{{ $module->code }}][view]"
+                                                        class="permissionCheckbox module{{ $module->code }}" value="view"
+                                                        {{ $permission->hasPermission($module->code, 'view') ? 'checked' : '' }}>
                                                 </td>
-                                                <td><input type="checkbox" name="permissions[{{ $module->id }}][delete]"
-                                                        class="permissionCheckbox module{{ $module->id }}" value="delete"
-                                                        {{ $permission->hasPermission($module->id, 'delete') ? 'checked' : '' }}>
+                                                <td><input type="checkbox" name="permissions[{{ $module->code }}][delete]"
+                                                        class="permissionCheckbox module{{ $module->code }}" value="delete"
+                                                        {{ $permission->hasPermission($module->code, 'delete') ? 'checked' : '' }}>
                                                 </td>
                                             </tr>
                                         @endforeach
-
-
                                     </tbody>
                                 </table>
                             </div>
                             <div class="form-group mt-2">
-                                <button type="submit" class="btn btn-primary" onclick="submitForm()">Update</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                                 <a href="{{ route('permissions.index') }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>
@@ -90,11 +87,6 @@
             checkboxes.forEach(cb => {
                 cb.checked = checkbox.checked;
             });
-        }
-
-        // Function to submit the form
-        function submitForm() {
-            document.getElementById('permissionsForm').submit();
         }
 
         // Add event listeners to "Select All" checkboxes

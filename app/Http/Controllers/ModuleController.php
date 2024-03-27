@@ -8,16 +8,25 @@ class ModuleController extends Controller
 {
   public function index(Request $request)
   {
-    $query = Module::query();
+    $query = Module::query()->with('children');
 
     if ($request->has('search')) {
-      $query->where('name', 'like', '%' . $request->input('search') . '%');
-  }
+      $searchTerm = $request->input('search');
+      $query->where(function ($query) use ($searchTerm) {
+        $query
+          ->where('name', 'like', '%' . $searchTerm . '%')
+          ->orWhereHas('children', function ($query) use ($searchTerm) {
+            $query->where('name', 'like', '%' . $searchTerm . '%');
+          });
+      });
+    }
 
-  if ($request->has('status') && $request->input('status') != 'all') {
-      $query->where('is_active', $request->input('status') == 'active' ? 1 : 0);
-  }
-    $modules = $query->paginate(10);
+    if ($request->has('status') && $request->input('status') != 'all') {
+      $status = $request->input('status') == 'active' ? 1 : 0;
+      $query->where('is_active', $status);
+    }
+
+    $modules = $query->whereNull('parent_code')->get();
 
     return view('modules.index', compact('modules'));
   }
@@ -39,14 +48,17 @@ class ModuleController extends Controller
       'description' => $request->input('description'),
     ]);
 
-    return redirect()->route('modules.index')->with('success', 'Module updated successfully.');
+    return redirect()
+      ->route('modules.index')
+      ->with('success', 'Module updated successfully.');
   }
-  // public function changeStatus(Request $request)
-  // {
-  //     $module = Module::find($request->module_code);
-  //     $module->is_active = $request->is_active;
-  //     $module->save();
 
-  //     return response()->json(['success'=>'Status change successfully.']);
-  // }
+  public function toggleStatus($submoduleId, Request $request)
+  {
+    // dd($request->all());
+    $submodule = Module::findOrFail($submoduleId);
+    $submodule->is_active = $request->status;
+    $submodule->save();
+    return response()->json(['message' => 'Status updated successfully']);
+  }
 }

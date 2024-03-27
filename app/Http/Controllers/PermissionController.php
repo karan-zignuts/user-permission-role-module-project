@@ -29,8 +29,6 @@ class PermissionController extends Controller
 
   public function create()
   {
-    // return view('permissions.create');
-
     $modules = Module::all();
 
     return view('permissions.create', ['modules' => $modules]);
@@ -77,7 +75,7 @@ class PermissionController extends Controller
   public function edit($id)
   {
     $permission = Permission::with('modules')->findOrFail($id);
-    dd($permission);
+    // dd($permission);
     $modules = Module::all();
     return view('permissions.edit', compact('permission', 'modules'));
   }
@@ -121,7 +119,6 @@ class PermissionController extends Controller
     return view('edit_permission', [
       'permission' => $permission,
       'modules' => $modules,
-      // You may need to pass more data depending on your application logic
     ]);
   }
 }

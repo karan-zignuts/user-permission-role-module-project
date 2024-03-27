@@ -127,21 +127,20 @@
                                             <tr>
                                                 <td>{{ $module->name }}</td>
                                                 <td><input type="checkbox" class="selectAll"
-                                                        data-target="module{{ $module->id }}"> Select All</td>
-                                                <td><input type="checkbox" name="permissions[{{ $module->id }}][create]"
-                                                        class="permissionCheckbox module{{ $module->id }}"></td>
-                                                <td><input type="checkbox" name="permissions[{{ $module->id }}][edit]"
-                                                        class="permissionCheckbox module{{ $module->id }}"></td>
-                                                <td><input type="checkbox" name="permissions[{{ $module->id }}][view]"
-                                                        class="permissionCheckbox module{{ $module->id }}"></td>
-                                                <td><input type="checkbox" name="permissions[{{ $module->id }}][delete]"
-                                                        class="permissionCheckbox module{{ $module->id }}"></td>
+                                                        data-target="module{{ $module->code }}"> Select All</td>
+                                                <td><input type="checkbox" name="permissions[{{ $module->code }}][create]"
+                                                        class="permissionCheckbox module{{ $module->code }}"></td>
+                                                <td><input type="checkbox" name="permissions[{{ $module->code }}][edit]"
+                                                        class="permissionCheckbox module{{ $module->code }}"></td>
+                                                <td><input type="checkbox" name="permissions[{{ $module->code }}][view]"
+                                                        class="permissionCheckbox module{{ $module->code }}"></td>
+                                                <td><input type="checkbox" name="permissions[{{ $module->code }}][delete]"
+                                                        class="permissionCheckbox module{{ $module->code }}"></td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- End module wise permissions -->
                             <div class="form-group mt-2">
                                 <button type="submit" class="btn btn-primary">Save</button>
                                 <a href="{{ route('permissions.index') }}" class="btn btn-secondary">Cancel</a>

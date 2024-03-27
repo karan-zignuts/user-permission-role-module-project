@@ -59,6 +59,9 @@ Route::get('/modules', [ModuleController::class, 'index'])->name('modules.index'
 Route::get('/modules/edit/{module}', [ModuleController::class, 'edit'])->name('modules.edit');
 Route::put('/modules/{module}', [ModuleController::class, 'update'])->name('modules.update');
 Route::get('changeStatus', [ModuleController::class, 'changeStatus']);
+Route::put('modules/toggleStatus/{submoduleId}', [ModuleController::class, 'toggleStatus'])->name('modules.toggleStatus');
+
+
 
 //roles
 Route::controller(RoleController::class)->group(function (){
