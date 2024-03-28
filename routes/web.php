@@ -48,10 +48,6 @@ Route::controller(PermissionController::class)->group(function () {
   // Route::post('/toggle-status/{id}','toggleStatus')->name('permissions.toggleStatus');
   Route::post('/permissions/toggleStatus/{permission_id}', 'toggleStatus')->name('permissions.toggleStatus');
 
-
-  // Route::get('/toggle-status/{permission_id}/{status}', 'toggleStatus')->name('permissions.toggle-status');
-
-
 });
 
 //Modules
@@ -70,7 +66,10 @@ Route::controller(RoleController::class)->group(function (){
     Route::post('/roles/store', [RoleController::class, 'store'])->name('roles.store');
     Route::get('/roles/edit/{id}', [RoleController::class, 'edit'])->name('roles.edit');
     Route::put('/roles/update/{id}', [RoleController::class, 'update'])->name('roles.update');
-    Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
+    Route::delete('/roles/delete/{id}', [RoleController::class, 'delete'])->name('roles.destroy');
+    Route::post('/roles/updateStatus', [RoleController::class, 'updateStatus'])->name('roles.updateStatus');
+
+
   });
 
 

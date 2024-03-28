@@ -52,7 +52,6 @@ class PermissionController extends Controller
       $module = Module::where('code', $moduleId)->first();
 
       if ($module) {
-
         DB::table('permission_modules')->insert([
           'permission_id' => $permission->id,
           'module_code' => $moduleId,
@@ -85,12 +84,40 @@ class PermissionController extends Controller
     $request->validate([
       'name' => 'required|string|max:255',
       'description' => 'nullable|string',
+      'permissions' => 'nullable|array',
     ]);
 
     $permission = Permission::findOrFail($id);
-    $permission->update($request->all());
-    // dd($request->all());
-    return redirect()->route('permissions.index');
+    $permission->update([
+      'name' => $request->input('name'),
+      'description' => $request->input('description'),
+    ]);
+
+    // Process module-wise permissions
+    $permissions = $request->input('permissions', []);
+
+    // Update module-wise permissions
+    foreach ($permissions as $moduleCode => $permissionData) {
+      // Find or create the permission module record
+      $permissionModule = $permission
+        ->permissionModules()
+        ->where('module_code', $moduleCode)
+        ->firstOrNew(['module_code' => $moduleCode]);
+
+      // Update the permission module record
+      $permissionModule
+        ->fill([
+          'create' => isset($permissionData['create']),
+          'edit' => isset($permissionData['edit']),
+          'view' => isset($permissionData['view']),
+          'delete' => isset($permissionData['delete']),
+        ])
+        ->save();
+    }
+
+    return redirect()
+      ->route('permissions.index')
+      ->with('success', 'Permission updated successfully.');
   }
 
   public function destroy($id)

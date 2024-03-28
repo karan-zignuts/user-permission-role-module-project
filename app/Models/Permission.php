@@ -27,8 +27,25 @@ class Permission extends Model
 
   public function hasPermission($code, $permissionType)
   {
-      // Assuming you have a relationship defined between Permission and Module
-      // Adjust this query based on your database schema and relationships
       return $this->modules()->where('code', $code)->where('code', $permissionType)->exists();
   }
+  public function updateModulePermissions($moduleCode, $permissions)
+  {
+      $modulePermission = PermissionModule::firstOrNew([
+          'permission_id' => $this->id,
+          'module_code' => $moduleCode,
+      ]);
+
+      $modulePermission->fill($permissions);
+      $modulePermission->save();
+  }
+  public function permissionModules()
+  {
+      return $this->hasMany(PermissionModule::class);
+  }
+  public function module()
+  {
+      return $this->belongsToMany(Module::class, 'permission_modules', 'permission_id', 'module_code');
+  }
+
 }

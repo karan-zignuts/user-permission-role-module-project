@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Module extends Model
 {
-  // use SoftDeletes; 
+  // use SoftDeletes;
 
     protected $primaryKey = 'code';
     protected $keyType = 'string'; // Assuming 'code' is a string primary key
@@ -26,7 +26,7 @@ class Module extends Model
 
     public function permissions()
     {
-        return $this->hasMany(Permission::class);
+        return $this->hasMany(Permission::class, 'module_code', 'module_code');
     }
     public function parent()
     {
@@ -38,4 +38,6 @@ class Module extends Model
     {
         return $this->hasMany(Module::class, 'parent_code', 'code');
     }
+
+
 }

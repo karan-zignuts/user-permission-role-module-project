@@ -33,48 +33,10 @@
       "slug": "module"
     },
     {
-      "name": "modules",
+      "url": "roles",
       "icon": "menu-icon tf-icons ti ti-file",
-      "slug": "module",
-      "submenu": [
-        {
-          "name": "Contact",
-          "slug": "pages-profile",
-          "submenu": [
-            {
-              "url": "pages/profile-user",
-              "name": "Company",
-              "slug": "pages-profile-user"
-            },
-            {
-              "url": "pages/profile-teams",
-              "name": "Pepole",
-              "slug": "pages-profile-teams"
-            }
-          ]
-        },
-        {
-          "name": "Account",
-          "slug": "pages-profile",
-          "submenu": [
-            {
-              "url": "pages/profile-user",
-              "name": "Notes",
-              "slug": "pages-profile-user"
-            },
-            {
-              "url": "pages/profile-teams",
-              "name": "Activity Log",
-              "slug": "pages-profile-teams"
-            },
-            {
-              "url": "pages/profile-teams",
-              "name": "Meetings",
-              "slug": "pages-profile-teams"
-            }
-          ]
-        }
-      ]
+      "name": "Roles",
+      "slug": "roles.index"
     }
   ]
 }
