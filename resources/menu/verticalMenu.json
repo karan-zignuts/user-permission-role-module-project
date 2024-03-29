@@ -1,36 +1,22 @@
 {
   "menu": [
     {
-      "url": "/",
+      "url": "dashboard",
       "name": "Dashboard",
       "icon": "menu-icon tf-icons ti ti-smart-home",
-      "slug": "pages-home"
+      "slug": "dashboard"
     },
     {
-      "url": "auth/login-basic",
-      "name": "Login",
-      "icon": "menu-icon tf-icons ti ti-login",
-      "slug": "auth-login-basic",
-      "target": "_blank"
-    },
-    {
-      "url": "auth/register-basic",
-      "name": "Register",
-      "icon": "menu-icon tf-icons ti ti-user",
-      "slug": "auth-register-basic",
-      "target": "_blank"
+      "url": "modules",
+      "icon": "menu-icon tf-icons ti ti-file",
+      "name": "Modules",
+      "slug": "modules.index"
     },
     {
       "url": "permissions",
       "icon": "menu-icon tf-icons ti ti-file",
       "name": "Permissions",
       "slug": "permissions.index"
-    },
-    {
-      "url": "modules",
-      "icon": "menu-icon tf-icons ti ti-file",
-      "name": "Modules",
-      "slug": "module"
     },
     {
       "url": "roles",

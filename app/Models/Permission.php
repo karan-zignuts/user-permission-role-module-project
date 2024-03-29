@@ -25,10 +25,10 @@ class Permission extends Model
     return $this->belongsTo(User::class);
   }
 
-  public function hasPermission($code, $permissionType)
-  {
-      return $this->modules()->where('code', $code)->where('code', $permissionType)->exists();
-  }
+  // public function hasPermission($code, $permissionType)
+  // {
+  //     return $this->modules()->where('code', $code)->where('code', $permissionType)->exists();
+  // }
   public function updateModulePermissions($moduleCode, $permissions)
   {
       $modulePermission = PermissionModule::firstOrNew([
@@ -46,6 +46,14 @@ class Permission extends Model
   public function module()
   {
       return $this->belongsToMany(Module::class, 'permission_modules', 'permission_id', 'module_code');
+  }
+
+  public function hasPermission($moduleCode, $action)
+  {
+      return $this->permissionModules()
+                  ->where('module_code', $moduleCode)
+                  ->where($action, true)
+                  ->exists();
   }
 
 }

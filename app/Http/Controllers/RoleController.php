@@ -58,31 +58,48 @@ class RoleController extends Controller
     }
 
     // Redirect back or to any desired route after saving
-    return redirect()->route('roles.index')->with('success', 'Role created successfully.');
+    return redirect()->route('roles.index');
   }
 
   public function edit($id)
   {
-    // Find role by ID and pass it to edit view
     $role = Role::findOrFail($id);
-    return view('roles.edit', compact('role'));
+    $permissions = Permission::all(); // Retrieve all permissions from the database
+
+    return view('roles.edit', compact('role', 'permissions'));
   }
+
+  // public function update(Request $request, $id)
+  // {
+  //   // Validate request data
+  //   $validatedData = $request->validate([
+  //     'name' => 'required',
+  //     'description' => 'required',
+  //     // Add validation rules for permissions if needed
+  //   ]);
+
+  //   // Find role by ID and update
+  //   $role = Role::findOrFail($id);
+  //   $role->update($validatedData);
+
+  //   // Redirect back with success message
+  //   return redirect('/roles');
+  // }
 
   public function update(Request $request, $id)
   {
-    // Validate request data
-    $validatedData = $request->validate([
-      'name' => 'required',
-      'description' => 'required',
-      // Add validation rules for permissions if needed
-    ]);
-
-    // Find role by ID and update
     $role = Role::findOrFail($id);
-    $role->update($validatedData);
 
-    // Redirect back with success message
-    return redirect('/roles')->with('success', 'Role updated successfully.');
+    $role->name = $request->input('name');
+    $role->description = $request->input('description');
+    $role->save();
+
+    // Sync the selected permissions for the role
+    $role->permissions()->sync($request->input('permissions', []));
+
+    return redirect()
+      ->route('roles.index')
+      ->with('success', 'Role updated successfully');
   }
 
   public function delete($id)
@@ -92,7 +109,7 @@ class RoleController extends Controller
     $role->delete();
 
     // Redirect back with success message
-    return redirect('/roles')->with('success', 'Role deleted successfully.');
+    return redirect('/roles');
   }
   public function updateStatus(Request $request)
   {

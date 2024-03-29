@@ -61,14 +61,11 @@
                             <td>
                                 <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-info btn-sm"><i
                                         class="fas fa-edit"></i> </a>
-                                <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST"
-                                    class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Are you sure you want to delete this permission?')"><i
-                                            class="fas fa-trash-alt"></i> </button>
-                                </form>
+                                        <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" class="d-inline" id="deletePermissionForm">
+                                          @csrf
+                                          @method('DELETE')
+                                          <button type="button" class="btn btn-danger btn-sm delete-permission-btn"><i class="fas fa-trash-alt"></i></button>
+                                      </form>
                             </td>
                         </tr>
                     @endforeach
@@ -98,6 +95,29 @@
               });
           });
       });
+
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-permission-btn').forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the form from submitting
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'You will not be able to recover this permission!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If user confirms, submit the form
+                        document.getElementById('deletePermissionForm').submit();
+                    }
+                });
+            });
+        });
+    });
   </script>
 
 @endsection

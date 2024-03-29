@@ -11,13 +11,21 @@ use App\Models\User;
 
 class DashboardController extends Controller
 {
-  // In your DashboardController
+    public function index()
+    {
+        $totalActiveModules = Module::where('is_active', true)->count();
+        $totalActivePermissions = Permission::where('is_active', true)->count();
+        $totalActiveRoles = Role::where('is_active', true)->count();
+        $totalActiveUsers = User::where('is_active', true)->count();
 
-  public function index()
-  {
-      $totalActiveModules = Module::where('active', true)->count();
-      $totalActivePermissions = Permission::where('active', true)->count();
-      $totalActiveRoles = Role::where('active', true)->count();
-      $totalActiveUsers = User::where('active', true)->count();
-  }
+        // Debug statements
+        // dd($totalActiveModules, $totalActivePermissions, $totalActiveRoles, $totalActiveUsers);
+
+        return view('dashboard')->with([
+            'totalActiveModules' => $totalActiveModules,
+            'totalActivePermissions' => $totalActivePermissions,
+            'totalActiveRoles' => $totalActiveRoles,
+            'totalActiveUsers' => $totalActiveUsers,
+        ]);
+    }
 }

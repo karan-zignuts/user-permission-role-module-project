@@ -79,54 +79,95 @@ class PermissionController extends Controller
     return view('permissions.edit', compact('permission', 'modules'));
   }
 
+  // public function update(Request $request, $id)
+  // {
+  //   $request->validate([
+  //     'name' => 'required|string|max:255',
+  //     'description' => 'nullable|string',
+  //     'permissions' => 'nullable|array',
+  //   ]);
+
+  //   $permission = Permission::findOrFail($id);
+  //   $permission->update([
+  //     'name' => $request->input('name'),
+  //     'description' => $request->input('description'),
+  //   ]);
+
+  //   // Process module-wise permissions
+  //   $permissions = $request->input('permissions', []);
+
+  //   // Update module-wise permissions
+  //   foreach ($permissions as $moduleCode => $permissionData) {
+  //     // Find or create the permission module record
+  //     $permissionModule = $permission
+  //       ->permissionModules()
+  //       ->where('module_code', $moduleCode)
+  //       ->firstOrNew(['module_code' => $moduleCode]);
+
+  //     // Update the permission module record
+  //     $permissionModule
+  //       ->fill([
+  //         'create' => isset($permissionData['create']),
+  //         'edit' => isset($permissionData['edit']),
+  //         'view' => isset($permissionData['view']),
+  //         'delete' => isset($permissionData['delete']),
+  //       ])
+  //       ->save();
+  //   }
+
+  //   return redirect()
+  //     ->route('permissions.index')
+  //     ->with('success', 'Permission updated successfully.');
+  // }
+
+  // public function destroy($id)
+  // {
+  //   $permission = Permission::findOrFail($id);
+  //   $permission->delete();
+
+  //   return redirect()->route('permissions.index');
+  // }
+
   public function update(Request $request, $id)
-  {
+{
     $request->validate([
-      'name' => 'required|string|max:255',
-      'description' => 'nullable|string',
-      'permissions' => 'nullable|array',
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'permissions' => 'nullable|array',
     ]);
 
     $permission = Permission::findOrFail($id);
     $permission->update([
-      'name' => $request->input('name'),
-      'description' => $request->input('description'),
+        'name' => $request->input('name'),
+        'description' => $request->input('description'),
     ]);
 
     // Process module-wise permissions
     $permissions = $request->input('permissions', []);
 
-    // Update module-wise permissions
     foreach ($permissions as $moduleCode => $permissionData) {
-      // Find or create the permission module record
-      $permissionModule = $permission
-        ->permissionModules()
-        ->where('module_code', $moduleCode)
-        ->firstOrNew(['module_code' => $moduleCode]);
-
-      // Update the permission module record
-      $permissionModule
-        ->fill([
-          'create' => isset($permissionData['create']),
-          'edit' => isset($permissionData['edit']),
-          'view' => isset($permissionData['view']),
-          'delete' => isset($permissionData['delete']),
-        ])
-        ->save();
+        // Check if any action is selected for this module
+        if (in_array(true, $permissionData)) {
+            // Find or create the permission module record
+            $permissionModule = $permission
+                ->permissionModules()
+                ->updateOrCreate(['module_code' => $moduleCode], [
+                    'create' => isset($permissionData['create']),
+                    'edit' => isset($permissionData['edit']),
+                    'view' => isset($permissionData['view']),
+                    'delete' => isset($permissionData['delete']),
+                ]);
+        } else {
+            // If no action is selected, delete existing permission for this module
+            $permission->permissionModules()->where('module_code', $moduleCode)->delete();
+        }
     }
 
     return redirect()
-      ->route('permissions.index')
-      ->with('success', 'Permission updated successfully.');
-  }
+        ->route('permissions.index')
+        ->with('success', 'Permission updated successfully.');
+}
 
-  public function destroy($id)
-  {
-    $permission = Permission::findOrFail($id);
-    $permission->delete();
-
-    return redirect()->route('permissions.index');
-  }
 
   public function toggleStatus($permission_id, Request $request)
   {
@@ -148,4 +189,11 @@ class PermissionController extends Controller
       'modules' => $modules,
     ]);
   }
+  public function destroy($id)
+{
+    $permission = Permission::findOrFail($id);
+    $permission->delete();
+
+    return redirect()->route('permissions.index')->with('success', 'Permission deleted successfully.');
+}
 }

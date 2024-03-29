@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\DashboardController;
 
 
 
@@ -23,8 +24,12 @@ use App\Http\Controllers\RoleController;
 $controller_path = 'App\Http\Controllers';
 
 // Main Page Route
-Route::get('/', $controller_path . '\pages\HomePage@index')->name('pages-home');
+// Route::get('/', $controller_path . '\pages\HomePage@index')->name('pages-home');
 Route::get('/page-2', $controller_path . '\pages\Page2@index')->name('pages-page-2');
+
+Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
 
 // pages
 Route::get('/pages/misc-error', $controller_path . '\pages\MiscError@index')->name('pages-misc-error');

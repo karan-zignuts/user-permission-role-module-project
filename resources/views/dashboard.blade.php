@@ -1,11 +1,10 @@
 @php
-$configData = Helper::appClasses();
+    $configData = Helper::appClasses();
 @endphp
 
 @extends('layouts/layoutMaster')
 
 @section('title', 'Home')
-@extends('layouts.app')
 
 @section('content')
 
@@ -13,8 +12,8 @@ $configData = Helper::appClasses();
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Active Modules</h5>
+                    <div class="card-body ">
+                        <h5 class="card-title">Total Active Modules </h5>
                         <p>{{ $totalActiveModules }}</p>
                     </div>
                 </div>
@@ -46,4 +45,3 @@ $configData = Helper::appClasses();
         </div>
     </div>
 @endsection
-
