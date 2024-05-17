@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
-                    <div class="card-body ">
+                    <div class="card-body">
                         <h5 class="card-title">Total Active Modules </h5>
                         <p>{{ $totalActiveModules }}</p>
                     </div>

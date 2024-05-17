@@ -15,4 +15,21 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class, 'role_permission');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_roles');
+    }
+
+    public function hasRole($moduleCode, $action)
+    {
+
+      foreach ($this->permissions as $permission) {
+        if ($permission->hasPermission($moduleCode, $action)) {
+              // dd($moduleCode);
+                return true;
+            }
+        }
+        return false;
+    }
 }

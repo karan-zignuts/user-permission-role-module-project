@@ -8,119 +8,117 @@ use App\Models\Permission;
 
 class RoleController extends Controller
 {
-  public function index(Request $request)
-  {
-    $query = Role::query();
+    public function index(Request $request)
+    {
+        $query = Role::query();
 
-    // Search by name
-    if ($request->has('search')) {
-      $search = $request->input('search');
-      $query->where('name', 'like', "%$search%");
+        // Search by name
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%$search%");
+        }
+
+        // Filter by status
+        $status = $request->input('status');
+        if ($status === 'active') {
+            $query->where('is_active', true);
+        } elseif ($status === 'inactive') {
+            $query->where('is_active', false);
+        }
+
+        $roles = $query->paginate(5);
+        // dd($roles);
+        return view('roles.index', compact('roles'));
     }
 
-    // Filter by status
-    $status = $request->input('status');
-    if ($status === 'active') {
-      $query->where('is_active', true);
-    } elseif ($status === 'inactive') {
-      $query->where('is_active', false);
+    public function create()
+    {
+        $permissions = Permission::all();
+        return view('roles.create', ['permissions' => $permissions]);
     }
 
-    $roles = $query->paginate(10);
+    public function store(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'permissions' => 'nullable|array',
+        ]);
 
-    return view('roles.index', compact('roles'));
-  }
+        // Create a new role instance
+        $role = new Role();
+        $role->name = $request->input('name');
+        $role->description = $request->input('description');
+        $role->save();
 
-  public function create()
-  {
-    $permissions = Permission::all();
-    return view('roles.create', ['permissions' => $permissions]);
-  }
+        // Attach permissions if provided
+        if ($request->has('permissions')) {
+            $role->permissions()->attach($request->input('permissions'));
+        }
 
-  public function store(Request $request)
-  {
-    // Validate the incoming request data
-    $request->validate([
-      'name' => 'required|string|max:255',
-      'description' => 'nullable|string|max:255',
-      'permissions' => 'nullable|array', // Assuming permissions are optional
-    ]);
-
-    // Create a new role instance
-    $role = new Role();
-    $role->name = $request->input('name');
-    $role->description = $request->input('description');
-    $role->save();
-
-    // Attach permissions if provided
-    if ($request->has('permissions')) {
-      $role->permissions()->attach($request->input('permissions'));
+        // Redirect back or to any desired route after saving
+        return redirect()->route('roles.index');
     }
 
-    // Redirect back or to any desired route after saving
-    return redirect()->route('roles.index');
-  }
+    public function edit($id)
+    {
+        $role = Role::findOrFail($id);
+        $permissions = Permission::all(); // Retrieve all permissions from the database
 
-  public function edit($id)
-  {
-    $role = Role::findOrFail($id);
-    $permissions = Permission::all(); // Retrieve all permissions from the database
-
-    return view('roles.edit', compact('role', 'permissions'));
-  }
-
-  // public function update(Request $request, $id)
-  // {
-  //   // Validate request data
-  //   $validatedData = $request->validate([
-  //     'name' => 'required',
-  //     'description' => 'required',
-  //     // Add validation rules for permissions if needed
-  //   ]);
-
-  //   // Find role by ID and update
-  //   $role = Role::findOrFail($id);
-  //   $role->update($validatedData);
-
-  //   // Redirect back with success message
-  //   return redirect('/roles');
-  // }
-
-  public function update(Request $request, $id)
-  {
-    $role = Role::findOrFail($id);
-
-    $role->name = $request->input('name');
-    $role->description = $request->input('description');
-    $role->save();
-
-    // Sync the selected permissions for the role
-    $role->permissions()->sync($request->input('permissions', []));
-
-    return redirect()
-      ->route('roles.index')
-      ->with('success', 'Role updated successfully');
-  }
-
-  public function delete($id)
-  {
-    // Find role by ID and delete
-    $role = Role::findOrFail($id);
-    $role->delete();
-
-    // Redirect back with success message
-    return redirect('/roles');
-  }
-  public function updateStatus(Request $request)
-  {
-    $role = Role::find($request->role_id);
-    if (!$role) {
-      return response()->json(['error' => 'Role not found'], 404);
+        return view('roles.edit', compact('role', 'permissions'));
     }
 
-    $role->is_active = $request->status;
-    $role->save();
+    // public function update(Request $request, $id)
+    // {
+    //   // Validate request data
+    //   $validatedData = $request->validate([
+    //     'name' => 'required',
+    //     'description' => 'required',
+    //     // Add validation rules for permissions if needed
+    //   ]);
 
-    return response()->json(['success' => 'Role status updated successfully']);
-  }
+    //   // Find role by ID and update
+    //   $role = Role::findOrFail($id);
+    //   $role->update($validatedData);
+
+    //   // Redirect back with success message
+    //   return redirect('/roles');
+    // }
+
+    public function update(Request $request, $id)
+    {
+        $role = Role::findOrFail($id);
+
+        $role->name = $request->input('name');
+        $role->description = $request->input('description');
+        $role->save();
+
+        // Sync the selected permissions for the role
+        $role->permissions()->sync($request->input('permissions', []));
+
+        return redirect()->route('roles.index')->with('success', 'Role updated successfully');
+    }
+
+    public function delete($id)
+    {
+        // Find role by ID and delete
+        $role = Role::findOrFail($id);
+        $role->delete();
+
+        // Redirect back with success message
+        return redirect('/roles');
+    }
+    public function updateStatus(Request $request)
+    {
+        $role = Role::find($request->role_id);
+        if (!$role) {
+            return response()->json(['error' => 'Role not found'], 404);
+        }
+
+        $role->is_active = $request->status;
+        $role->save();
+
+        return response()->json(['success' => 'Role status updated successfully']);
+    }
 }

@@ -5,8 +5,6 @@ $configData = Helper::appClasses();
 @extends('layouts/layoutMaster')
 
 @section('title', 'Home')
-@extends('layouts.app')
-
 @section('content')
 
     <div class="container">

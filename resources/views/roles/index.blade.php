@@ -71,72 +71,79 @@
                                         <td>
                                             <a href="{{ route('roles.edit', $role->id) }}"
                                                 class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> </a>
-                                                <form id="deleteRoleForm{{ $role->id }}" action="{{ route('roles.destroy', $role->id) }}" method="POST" class="d-inline">
-                                                  @csrf
-                                                  @method('DELETE')
-                                                  <button type="submit" class="btn btn-sm btn-danger delete-role-btn" data-role-id="{{ $role->id }}">
-                                                      <i class="fas fa-trash-alt"></i>
-                                                  </button>
-                                              </form>
+                                            <form id="deleteRoleForm{{ $role->id }}"
+                                                action="{{ route('roles.destroy', $role->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger delete-role-btn"
+                                                    data-role-id="{{ $role->id }}">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $roles->links() }}
+
+                        <div id="pagination" class="pt-2">
+                            {{ $roles->links() }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<script>
-  $(document).ready(function() {
-      $('.toggle-class').change(function() {
-          var roleId = $(this).data('role-id');
-          var status = $(this).prop('checked') ? 1 : 0;
+    <script>
+        $(document).ready(function() {
+          $('.toggle-class').change(function() {
+            var roleId = $(this).data('role-id');
+            var status = $(this).prop('checked') ? 1 : 0;
 
-          $.ajax({
-              url: "{{ route('roles.updateStatus') }}",
-              method: 'POST',
-              data: {
-                  role_id: roleId,
-                  status: status,
-                  _token: '{{ csrf_token() }}'
-              },
-              success: function(response) {
-                  // Handle success response
-                  console.log(response);
-              },
-              error: function(xhr) {
-                  // Handle error response
-                  console.log(xhr.responseText);
-              }
-          });
-      });
-  });
-</script>
+            // console.log('hii');
 
-<script>
-  $(document).ready(function () {
-      $('.delete-role-btn').click(function (e) {
-          e.preventDefault();
-          var roleId = $(this).data('role-id');
-          Swal.fire({
-              title: 'Are you sure?',
-              text: "You won't be able to revert this!",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#d33',
-              cancelButtonColor: '#3085d6',
-              confirmButtonText: 'Yes, delete it!'
-          }).then((result) => {
-              if (result.isConfirmed) {
-                  // If user confirms, submit the form
-                  $('#deleteRoleForm' + roleId).submit();
-              }
-          });
-      });
-  });
-</script>
+                $.ajax({
+                    url: "{{ route('roles.updateStatus') }}",
+                    method: 'POST',
+                    data: {
+                        role_id: roleId,
+                        status: status,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        // Handle success response
+                        console.log(response);
+                    },
+                    error: function(xhr) {
+                        // Handle error response
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 
+    <script>
+        $(document).ready(function() {
+            $('.delete-role-btn').click(function(e) {
+                e.preventDefault();
+                var roleId = $(this).data('role-id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If user confirms, submit the form
+                        $('#deleteRoleForm' + roleId).submit();
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

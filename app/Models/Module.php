@@ -7,20 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Module extends Model
 {
-  // use SoftDeletes;
+    // use SoftDeletes;
 
     protected $primaryKey = 'code';
-    protected $keyType = 'string'; // Assuming 'code' is a string primary key
-
-    protected $fillable = [
-        'code',
-        'name',
-        'description',
-        'parent_code',
-        'is_active',
-        'created_by',
-        'updated_by',
-    ];
+    protected $keyType = 'string';
+    protected $fillable = ['code', 'name', 'description', 'parent_code', 'is_active', 'created_by', 'updated_by'];
 
     public $incrementing = false;
 
@@ -38,6 +29,4 @@ class Module extends Model
     {
         return $this->hasMany(Module::class, 'parent_code', 'code');
     }
-
-
 }

@@ -1,50 +1,46 @@
 <?php
 
-// namespace App\Http\Controllers\authentications;
-
-// use App\Http\Controllers\Controller;
-// use Illuminate\Http\Request;
-
-// class LoginBasic extends Controller
-// {
-//   public function index()
-//   {
-//     $pageConfigs = ['myLayout' => 'blank'];
-//     return view('content.authentications.auth-login-basic', ['pageConfigs' => $pageConfigs]);
-//   }
-// }
-
 namespace App\Http\Controllers\authentications;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class LoginBasic extends Controller
 {
-    public function index()
-    {
-        $pageConfigs = ['myLayout' => 'blank'];
-        return view('content.authentications.auth-login-basic', ['pageConfigs' => $pageConfigs]);
-    }
+  public function index()
+  {
+    // dd('hii');
+    $pageConfigs = ['myLayout' => 'blank'];
+    return view('content.authentications.auth-login-basic', ['pageConfigs' => $pageConfigs]);
+  }
 
-    public function login(Request $request)
-    {
-      // dd($request->all());
-      // Validate input
-      $request->validate([
-        'email' => 'required|string',
-        'password' => 'required|string',
-      ]);
-      // dd($request->all());
+  public function login(Request $request)
+  {
+    $request->validate([
+      'email' => 'required|string',
+      'password' => 'required|string',
+    ]);
 
-        // Attempt to authenticate
-        $credentials = $request->only('email', 'password');
-        if (auth()->attempt($credentials)) {
-            // Authentication successful, redirect to intended page or home
-            return redirect()->intended('/');
-        } else {
-            // Authentication failed, redirect back with error
-            return redirect()->back()->withErrors(['message' => 'Invalid credentials']);
-        }
+    $credentials = $request->only('email', 'password');
+    $remember = $request->has('remember');
+
+    if (Auth::attempt($credentials, $remember)) {
+      $userEmail = Auth::user()->email;
+      if ($userEmail === 'hardik@gmail.com') {
+        return redirect()->route('dashboard');
+      } else {
+        return redirect()->route('userside.details');
+      }
+    } else {
+      return redirect()
+        ->back()
+        ->withErrors(['message' => 'Invalid credentials']);
     }
+  }
+  public function logout()
+  {
+    
+  }
 }

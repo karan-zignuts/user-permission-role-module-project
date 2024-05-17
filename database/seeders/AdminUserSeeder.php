@@ -14,11 +14,11 @@ class AdminUserSeeder extends Seeder
     {
       User::create([
         'first_name' => 'Hardik',
-        'last_name' => 'Chauhan',
+        'last_name' => 'Pandya',
         'email' => 'hardik@gmail.com',
         'phone_number' => '9900332255',
         'address' =>  'Mumbai, India',
-        'password' => bcrypt('123456'),
+        'password' => bcrypt('123456789'),
         'is_active'=> true,
     ]);
     }
