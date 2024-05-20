@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /node_modules
 /public/hot
 /public/storage
@@ -26,6 +26,3 @@ package-lock.json
 /public/assets/vendor
 package.lock
 composer.lock
-=======
-node_modules
->>>>>>> develop

@@ -64,9 +64,9 @@ Configure your database connection in the `.env` file.
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=user_role_module
+DB_DATABASE=your_database_name
 DB_USERNAME=root
-DB_PASSWORD=yourpassword
+DB_PASSWORD=your_password
 ```
 
 ## Email Configuration
@@ -78,7 +78,7 @@ MAIL_MAILER=smtp
 MAIL_HOST=sandbox.smtp.mailtrap.io
 MAIL_PORT=2525
 MAIL_USERNAME=youremail@gmail.com
-MAIL_PASSWORD=yourpassword
+MAIL_PASSWORD=your_password
 MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=youremail@gmail.com
 MAIL_FROM_NAME="${APP_NAME}"
