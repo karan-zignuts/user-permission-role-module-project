@@ -1,12 +1,7 @@
-<!-- Display modules -->
 <?php
     $configData = Helper::appClasses();
 ?>
 <?php $__env->startSection('title', 'index'); ?>
-
-
-
-
 
 
 <?php $__env->startSection('content'); ?>
@@ -63,30 +58,32 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                              <?php $__currentLoopData = $module->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subModule): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                              <tr>
-                                                  <td><?php echo e($subModule->name); ?></td>
-                                                  <td><?php echo e($subModule->description); ?></td>
-                                                  <td>
-                                                  <div class="form-check form-switch">
-                                                    <input class="form-check-input toggle-class" type="checkbox"
-                                                        data-module-id="<?php echo e($subModule->code); ?>" id="flexSwitchCheck<?php echo e($subModule->code); ?>"
-                                                        <?php echo e($subModule->is_active ? 'checked' : ''); ?>>
-                                                    <label class="form-check-label" for="flexSwitchCheck<?php echo e($subModule->code); ?>"></label>
+                                                <?php $__currentLoopData = $module->children; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subModule): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <tr>
+                                                        <td><?php echo e($subModule->name); ?></td>
+                                                        <td><?php echo e($subModule->description); ?></td>
+                                                        <td>
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input toggle-class" type="checkbox"
+                                                                    data-module-id="<?php echo e($subModule->code); ?>"
+                                                                    id="flexSwitchCheck<?php echo e($subModule->code); ?>"
+                                                                    <?php echo e($subModule->is_active ? 'checked' : ''); ?>>
+                                                                <label class="form-check-label"
+                                                                    for="flexSwitchCheck<?php echo e($subModule->code); ?>"></label>
 
 
-                                                    
+                                                                
 
-                                                </div>
-                                                  </td>
-                                                  <td>
-                                                      <div class="float-right">
-                                                          <a href="<?php echo e(route('modules.edit', $subModule)); ?>"
-                                                              class="btn btn-sm btn-primary ml-2">Edit</a>
-                                                      </div>
-                                                  </td>
-                                              </tr>
-                                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="float-right">
+                                                                <a href="<?php echo e(route('modules.edit', $subModule)); ?>"
+                                                                    class="btn btn-sm btn-primary ml-2">Edit</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </tbody>
                                         </table>
                                     <?php else: ?>
@@ -102,27 +99,31 @@
     </div>
 
     <script>
-      $(document).ready(function () {
-          $('.toggle-class').change(function () {
-              var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-              var submoduleId = $(this).data('module-id');
-              var status = $(this).prop('checked') == true ? 1 : 0;
-              $.ajax({
-                  type: "PUT",
-                  dataType: "json",
-                  url: '<?php echo e(route('modules.toggleStatus', ':submoduleId')); ?>'.replace(':submoduleId', submoduleId),
-                  // url: '<?php echo e(route('modules.toggleStatus', ['submoduleId' => ':submoduleId'])); ?>'.replace(':submoduleId', submoduleId),
-                  headers: {
-                      'X-CSRF-TOKEN': CSRF_TOKEN
-                  },
-                  data: {'status': status, 'submoduleId': submoduleId},
-                  success: function (data) {
-                      console.log(data.success)
-                  }
-              });
-          });
-      });
-  </script>
+        $(document).ready(function() {
+            $('.toggle-class').change(function() {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                var submoduleId = $(this).data('module-id');
+                var status = $(this).prop('checked') == true ? 1 : 0;
+                $.ajax({
+                    type: "PUT",
+                    dataType: "json",
+                    url: '<?php echo e(route('modules.toggleStatus', ':submoduleId')); ?>'.replace(
+                        ':submoduleId', submoduleId),
+                    // url: '<?php echo e(route('modules.toggleStatus', ['submoduleId' => ':submoduleId'])); ?>'.replace(':submoduleId', submoduleId),
+                    headers: {
+                        'X-CSRF-TOKEN': CSRF_TOKEN
+                    },
+                    data: {
+                        'status': status,
+                        'submoduleId': submoduleId
+                    },
+                    success: function(data) {
+                        console.log(data.success)
+                    }
+                });
+            });
+        });
+    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('../layouts/layoutMaster', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/ztlab113/Desktop/project /Laravel/user-permission-role-module/resources/views/modules/index.blade.php ENDPATH**/ ?>
