@@ -1,37 +1,90 @@
 {
   "menu": [
     {
-      "url": "/",
-      "name": "Home",
-      "icon": "menu-icon tf-icons ti ti-smart-home",
-      "slug": "pages-home"
+      "url": "dashboard",
+      "name": "Dashboard",
+      "icon": "menu-icon tf-icons ti ti-home",
+      "slug": "dashboard",
+      "role": "admin"
     },
     {
-      "url": "page-2",
-      "icon": "menu-icon tf-icons ti ti-file",
-      "name": "Page 2",
-      "slug": "pages-page-2"
+      "url": "modules",
+      "icon": "menu-icon tf-icons ti ti-package",
+      "name": "Modules",
+      "slug": "modules.index",
+      "role": "admin"
     },
     {
-      "url": "pages/misc-error",
-      "name": "Error",
-      "icon": "menu-icon tf-icons ti ti-alert-triangle",
-      "slug": "pages-misc-error",
-      "target": "_blank"
+      "url": "permissions",
+      "icon": "menu-icon tf-icons ti ti-shield",
+      "name": "Permissions",
+      "slug": "permissions.index",
+      "role": "admin"
     },
     {
-      "url": "auth/login-basic",
-      "name": "Login",
-      "icon": "menu-icon tf-icons ti ti-login",
-      "slug": "auth-login-basic",
-      "target": "_blank"
+      "url": "roles",
+      "icon": "menu-icon tf-icons ti ti-lock",
+      "name": "Roles",
+      "slug": "roles.index",
+      "role": "admin"
     },
     {
-      "url": "auth/register-basic",
-      "name": "Register",
+      "url": "users",
       "icon": "menu-icon tf-icons ti ti-user",
-      "slug": "auth-register-basic",
-      "target": "_blank"
+      "name": "Users",
+      "slug": "user.index",
+      "role": "admin"
+    },
+    {
+      "url": "/user-details",
+      "name": "Dashboard",
+      "icon": "menu-icon tf-icons ti ti-home",
+      "slug": "user-details",
+      "role": "user"
+    },
+    {
+      "name": "Contact",
+      "icon": "menu-icon tf-icons ti ti-user",
+      "slug": "contact-main-module",
+      "role": "user",
+      "submenu": [
+        {
+          "url": "people",
+          "name": "People",
+          "slug": "people-submodule",
+          "role": "user"
+        },
+        {
+          "url": "companies",
+          "name": "Company",
+          "slug": "company-sub-module",
+          "role": "user"
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "icon": "menu-icon tf-icons ti ti-settings",
+      "slug": "Account-main-module",
+      "role": "user",
+      "submenu": [
+        {
+          "url": "notes",
+          "name": "Notes",
+          "slug": "notes-sub-module"
+
+        },
+        {
+          "url": "meetings",
+          "name": "Meetings",
+          "slug": "meetings-sub-module"
+        },
+        {
+          "url": "activities",
+          "name": "Activity Log",
+          "slug": "activity-log-sub-module"
+        }
+      ]
     }
   ]
 }
