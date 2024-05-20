@@ -3,21 +3,6 @@
 @endphp
 
 @extends('../layouts/layoutMaster')
-
-{{-- @section('content')
-    <form action="{{ route('meetings.store') }}" method="POST">
-        @csrf
-        <input type="text" name="name" placeholder="Name">
-        <input type="text" name="description" placeholder="Description">
-        <input type="date" name="date" min="{{ now()->toDateString() }}">
-        <input type="time" name="time" min="{{ now()->toTimeString() }}">
-        <button type="submit">Save</button>
-        <a href="{{ route('meetings.index') }}">Cancel</a>
-    </form>
-@endsection --}}
-
-
-
 @section('content')
     <div class="container mt-5">
         <div class="row justify-content-center">

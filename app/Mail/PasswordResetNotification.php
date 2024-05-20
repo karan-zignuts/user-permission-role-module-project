@@ -8,6 +8,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\User;
+
 
 class PasswordResetNotification extends Mailable
 {
@@ -19,7 +21,7 @@ class PasswordResetNotification extends Mailable
      */
     public function __construct(User $user)
     {
-      $this->user = $user;
+        $this->user = $user;
     }
 
     /**
@@ -27,9 +29,7 @@ class PasswordResetNotification extends Mailable
      */
     public function envelope(): Envelope
     {
-        return new Envelope(
-            subject: 'Password Reset Notification',
-        );
+        return new Envelope(subject: 'Password Reset Notification');
     }
 
     /**
@@ -37,9 +37,7 @@ class PasswordResetNotification extends Mailable
      */
     public function content(): Content
     {
-        return new Content(
-            view: 'view.name',
-        );
+        return new Content(view: 'view.name');
     }
 
     /**
@@ -54,7 +52,6 @@ class PasswordResetNotification extends Mailable
 
     public function build()
     {
-        return $this->subject('Password Reset Notification')
-                    ->markdown('emails.password_reset_notification');
+        return $this->subject('Password Reset Notification')->markdown('emails.password_reset_notification');
     }
 }

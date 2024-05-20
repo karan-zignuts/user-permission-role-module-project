@@ -5,25 +5,7 @@
 @extends('../layouts/layoutMaster')
 
 @section('content')
-    {{-- <form action="{{ route('users.updatePassword') }}" method="POST">
-        @csrf
-
-
-        <div class="form-group">
-            <label for="new_password">New Password</label>
-            <input type="password" name="new_password" id="new_password" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label for="confirm_password">Confirm Password</label>
-            <input type="password" name="new_password_confirmation" id="new_password_confirmation" class="form-control"
-                required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Update Password</button>
-    </form> --}}
-
-    @section('content')
+@section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -42,7 +24,9 @@
 
                             <div class="form-group">
                                 <label for="password">New Password</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password"
+                                    class="form-control @error('password') is-invalid @enderror" name="password" required
+                                    autocomplete="new-password">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -50,13 +34,14 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mt-2">
                                 <label for="password-confirm">Confirm Password</label>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control"
+                                    name="password_confirmation" required autocomplete="new-password">
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Reset Password</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary mt-3">Reset Password</button>
+                            <a href="{{ route('users.index') }}" class="btn btn-secondary  mt-3">Cancel</a>
                         </form>
                     </div>
                 </div>

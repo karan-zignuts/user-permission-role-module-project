@@ -11,7 +11,6 @@
             </div>
 
             <div class="card-body">
-                <!-- Search Bar -->
                 <form action="{{ route('people.index') }}" method="GET" class="mb-4">
                     <div class="row">
                         <div class="col-md-4">
@@ -34,7 +33,6 @@
                         </div>
                     </div>
                 </form>
-                <!-- People List -->
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>

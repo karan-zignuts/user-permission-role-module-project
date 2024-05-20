@@ -1,4 +1,3 @@
-<!-- resources/views/permissions/edit.blade.php -->
 @php
     $configData = Helper::appClasses();
 @endphp
@@ -64,15 +63,12 @@
                                                                 value="1" {{ $permissionExists ? 'checked' : '' }}>
                                                         </td>
                                                     @endforeach
-                                                    <!-- Hidden input for each module -->
                                                     <input type="hidden" name="permissions[{{ $module->code }}][dummy]"
                                                         value="0">
                                                 </tr>
                                             @endif
                                         @endforeach
-
                                     </tbody>
-
                                 </table>
                             </div>
                             <div class="form-group mt-2">
@@ -87,15 +83,12 @@
     </div>
 
     <script>
-        // Function to handle the "Select All" checkbox
         function handleSelectAll(checkbox) {
             const checkboxes = checkbox.parentElement.parentElement.querySelectorAll('.permissionCheckbox');
             checkboxes.forEach(cb => {
                 cb.checked = checkbox.checked;
             });
         }
-
-        // Add event listeners to "Select All" checkboxes
         const selectAllCheckboxes = document.querySelectorAll('.selectAll');
         selectAllCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('change', () => {

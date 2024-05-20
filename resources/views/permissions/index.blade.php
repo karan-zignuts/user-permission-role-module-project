@@ -17,7 +17,6 @@
                         <h3>Permissions</h3>
                     </div>
                     <div class="card-body">
-                        {{-- <h1 class="mt-5 mb-4">Permissions</h1> --}}
                         <a href="{{ route('permissions.create') }}" class="btn btn-primary mb-4"><i class="fas fa-plus"></i>
                             Create New
                             Permission</a>
@@ -121,7 +120,6 @@
                 });
             });
         });
-
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.delete-permission-btn').forEach(function(button) {
                 button.addEventListener('click', function(event) {
@@ -137,7 +135,6 @@
                         confirmButtonText: 'Yes, delete it!'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // If user confirms, submit the form
                             document.getElementById('deletePermissionForm').submit();
                         }
                     });
@@ -145,5 +142,4 @@
             });
         });
     </script>
-
 @endsection

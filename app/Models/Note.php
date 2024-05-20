@@ -9,11 +9,16 @@ class Note extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description','user_id'];
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['name', 'description', 'user_id'];
 
+    // Get the user that owns the note.
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 }
-

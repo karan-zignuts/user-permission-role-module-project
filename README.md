@@ -37,7 +37,18 @@
    php artisan db:seed
    ```
 
-8. Start the development server:
+8. Install npm packages:
+```bash 
+  npm install 
+```
+
+9. After installing npm packages to run this command:
+
+  ```bash
+    npm run dev
+  ```
+
+10. Start the development server:
 
    ```bash
    php artisan serve
@@ -72,4 +83,3 @@ MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=youremail@gmail.com
 MAIL_FROM_NAME="${APP_NAME}"
 ```
-

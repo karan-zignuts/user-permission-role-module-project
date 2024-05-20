@@ -1,4 +1,3 @@
-<!-- resources/views/permissions/create.blade.php -->
 @php
     $configData = Helper::appClasses();
 @endphp
@@ -25,7 +24,6 @@
                                 <label for="description">Description:</label>
                                 <textarea id="description" name="description" class="form-control" rows="3"></textarea>
                             </div>
-                            <!-- Module wise permissions -->
                             <div class="form-group mt-2">
                                 <label>Module-wise Permissions:</label>
                                 <table class="table">
@@ -76,7 +74,6 @@
     </div>
 
     <script>
-        // Function to handle the "Select All" checkbox
         function handleSelectAll(checkbox) {
             const checkboxes = checkbox.parentElement.parentElement.querySelectorAll('.permissionCheckbox');
             checkboxes.forEach(cb => {
@@ -84,12 +81,9 @@
             });
         }
 
-        // Function to submit the form
         function submitForm() {
             document.getElementById('permissionsForm').submit();
         }
-
-        // Add event listeners to "Select All" checkboxes
         const selectAllCheckboxes = document.querySelectorAll('.selectAll');
         selectAllCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('change', () => {

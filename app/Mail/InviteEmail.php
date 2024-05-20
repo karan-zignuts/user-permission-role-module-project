@@ -19,18 +19,12 @@ class InviteEmail extends Mailable
     /**
      * Create a new message instance.
      */
-    // public function __construct($user)
-    // {
-    //     $this->user = $user;
-
-    // }
-
     public function __construct(User $user, $token)
     {
         $this->user = $user;
         $this->token = $token;
     }
-    public function  build()
+    public function build()
     {
         // return $this->markdown('emails.invitation')->subject(config('app.name').',Invitation');
         return $this->markdown('emails.invitation');
@@ -41,9 +35,7 @@ class InviteEmail extends Mailable
      */
     public function envelope(): Envelope
     {
-        return new Envelope(
-            subject: 'Invite Email',
-        );
+        return new Envelope(subject: 'Invite Email');
     }
 
     /**
@@ -51,9 +43,7 @@ class InviteEmail extends Mailable
      */
     public function content(): Content
     {
-        return new Content(
-            view: 'view.name',
-        );
+        return new Content(view: 'view.name');
     }
 
     /**

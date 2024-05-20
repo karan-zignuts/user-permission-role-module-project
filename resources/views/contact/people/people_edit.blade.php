@@ -1,3 +1,6 @@
+@php
+    $configData = Helper::appClasses();
+@endphp
 @extends('../layouts/layoutMaster')
 
 @section('content')
@@ -13,31 +16,36 @@
                     <div class="mb-3 row">
                         <label for="name" class="col-sm-2 col-form-label">Name:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" name="name" value="{{ $person->name }}">
+                            <input type="text" class="form-control" id="name" name="name"
+                                value="{{ $person->name }}">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="designation" class="col-sm-2 col-form-label">Designation:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="designation" name="designation" value="{{ $person->designation }}">
+                            <input type="text" class="form-control" id="designation" name="designation"
+                                value="{{ $person->designation }}">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="address" class="col-sm-2 col-form-label">Address:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="address" name="address" value="{{ $person->address }}">
+                            <input type="text" class="form-control" id="address" name="address"
+                                value="{{ $person->address }}">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="phone_number" class="col-sm-2 col-form-label">Contact No:</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ $person->phone_number }}">
+                            <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                value="{{ $person->phone_number }}">
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="email" class="col-sm-2 col-form-label">Email:</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="email" name="email" value="{{ $person->email }}">
+                            <input type="email" class="form-control" id="email" name="email"
+                                value="{{ $person->email }}">
                         </div>
                     </div>
                     <div class="mb-3 row">

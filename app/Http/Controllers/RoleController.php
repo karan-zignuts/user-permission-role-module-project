@@ -8,8 +8,10 @@ use App\Models\Permission;
 
 class RoleController extends Controller
 {
+    // Display a list of roles
     public function index(Request $request)
     {
+        // Initialize a query builder for roles
         $query = Role::query();
 
         // Search by name
@@ -31,12 +33,15 @@ class RoleController extends Controller
         return view('roles.index', compact('roles'));
     }
 
+    // Display form to create a new role
     public function create()
     {
+        // Retrieve all permissions to assign to roles
         $permissions = Permission::all();
         return view('roles.create', ['permissions' => $permissions]);
     }
 
+    // Store a newly created role in storage
     public function store(Request $request)
     {
         // Validate the incoming request data
@@ -61,45 +66,45 @@ class RoleController extends Controller
         return redirect()->route('roles.index');
     }
 
+    // Show the form for editing the specified role
     public function edit($id)
     {
+        // Find role by ID
         $role = Role::findOrFail($id);
-        $permissions = Permission::all(); // Retrieve all permissions from the database
+
+        // Retrieve all permissions from the database
+        $permissions = Permission::all();
 
         return view('roles.edit', compact('role', 'permissions'));
     }
 
-    // public function update(Request $request, $id)
-    // {
-    //   // Validate request data
-    //   $validatedData = $request->validate([
-    //     'name' => 'required',
-    //     'description' => 'required',
-    //     // Add validation rules for permissions if needed
-    //   ]);
-
-    //   // Find role by ID and update
-    //   $role = Role::findOrFail($id);
-    //   $role->update($validatedData);
-
-    //   // Redirect back with success message
-    //   return redirect('/roles');
-    // }
-
+    // Update the specified role in storage
     public function update(Request $request, $id)
     {
+        // Find role by ID
         $role = Role::findOrFail($id);
 
-        $role->name = $request->input('name');
-        $role->description = $request->input('description');
-        $role->save();
+        // Validate incoming request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'permissions' => 'nullable|array',
+        ]);
+
+        // Update role data with validated inputs
+        $role->update([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ]);
 
         // Sync the selected permissions for the role
         $role->permissions()->sync($request->input('permissions', []));
 
+        // Redirect to roles index with success message
         return redirect()->route('roles.index')->with('success', 'Role updated successfully');
     }
 
+    // Remove the specified role from storage
     public function delete($id)
     {
         // Find role by ID and delete
@@ -109,13 +114,17 @@ class RoleController extends Controller
         // Redirect back with success message
         return redirect('/roles');
     }
+
+    // Update the status of a role
     public function updateStatus(Request $request)
     {
+        // Find role by ID
         $role = Role::find($request->role_id);
         if (!$role) {
             return response()->json(['error' => 'Role not found'], 404);
         }
 
+        // Update role status and save changes
         $role->is_active = $request->status;
         $role->save();
 

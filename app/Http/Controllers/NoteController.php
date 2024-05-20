@@ -8,175 +8,93 @@ use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
 {
+    // Display a listing of the notes
     public function index(Request $request)
     {
-      $editBtn = Auth::user()->hasUserAccess(2.1, 'edit');
-      $deleteBtn = Auth::user()->hasUserAccess(2.1, 'delete');
-      $createBtn = Auth::user()->hasUserAccess(2.1, 'create');
+        // Check user permissions for edit, delete, and create actions
+        $editBtn = Auth::user()->hasUserAccess(2.1, 'edit');
+        $deleteBtn = Auth::user()->hasUserAccess(2.1, 'delete');
+        $createBtn = Auth::user()->hasUserAccess(2.1, 'create');
 
+        // Get the search term from the request
         $search = $request->input('search');
+
+        // Query notes, applying search filter if provided, and paginate the results
         $notes = Note::query()
             ->when($search, function ($query, $search) {
                 return $query->where('name', 'like', "%$search%");
-            })->where('user_id', Auth::id())
+            })
+            ->where('user_id', Auth::id())
             ->orderBy('id', 'desc')
             ->paginate(6);
 
-        return view('/account/notes/note_index', compact('notes', 'editBtn','deleteBtn','createBtn'));
+        // Return the notes index view with the notes and user permissions
+        return view('/account/notes/note_index', compact('notes', 'editBtn', 'deleteBtn', 'createBtn'));
     }
 
+    // Show the form for creating a new note
     public function create()
     {
+        // Return the note create view
         return view('/account/notes/note_create');
     }
 
-    // public function store(Request $request)
-    // {
-
-    //     $note = new Note();
-    //     $note->name = $request->input('name');
-    //     $note->description = $request->input('description');
-    //     $note->save();
-
-    //     return redirect()->route('notes.index');
-    // }
-
+    // Store a newly created note in the database
     public function store(Request $request)
     {
+        // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required',
             'description' => 'required',
         ]);
 
-
+        // Create a new note with the validated data and associate it with the authenticated user
         Note::create([
-          'name' => $request->name,
-          'description' => $request->description,
-          'user_id' => Auth::user()->id,
+            'name' => $request->name,
+            'description' => $request->description,
+            'user_id' => Auth::user()->id,
         ]);
 
+        // Redirect to the notes index page
         return redirect()->route('notes.index');
     }
 
+    // Display the specified note
     public function show(Note $note)
     {
         return view('notes.show', compact('note'));
     }
 
+    // Show the form for editing the specified note
     public function edit(Note $note)
     {
         return view('/account/notes/note_edit', compact('note'));
     }
 
+    // Update the specified note in the database
     public function update(Request $request, Note $note)
     {
-       $validatedData = $request->validate([
-          'name' => 'required',
-          'description' => 'required',
-       ]);
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
 
-       $note->update([
-        'name' => $request->name,
-        'description' => $request->description,
-        'user_id' => Auth::User()->id,
-       ]);
+        // Update the note with the validated data
+        $note->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'user_id' => Auth::User()->id,
+        ]);
 
         return redirect()->route('notes.index');
     }
 
+    // Remove the specified note from the database
     public function destroy(Note $note)
     {
+        // Delete the note
         $note->delete();
-
         return redirect()->route('notes.index');
     }
 }
-
-// if user has permission to edit or delete
-
-// class NoteController extends Controller
-// {
-//     public function index(Request $request)
-//     {
-//         $notes = Note::query();
-
-//         // Filter notes by name if search query is provided
-//         if ($request->has('search')) {
-//             $notes->where('name', 'like', '%' . $request->search . '%');
-//         }
-
-//         $notes = $notes->paginate(10);
-
-//         return view('/account/notes/note_index', compact('notes'));
-//     }
-
-//     public function create()
-//     {
-//         // Check if user has permission to create
-//         if (Gate::allows('create', Note::class)) {
-//             return view('notes.create');
-//         } else {
-//             abort(403, 'Unauthorized action.');
-//         }
-//     }
-
-//     public function store(Request $request)
-//     {
-//         // Validation
-//         $request->validate([
-//             'name' => 'required',
-//             'description' => 'required',
-//         ]);
-
-//         // Create new note
-//         Note::create([
-//             'name' => $request->input('name'),
-//             'description' => $request->input('description'),
-//         ]);
-
-//         return redirect()->route('notes.index')->with('success', 'Note created successfully.');
-//     }
-
-//     public function edit(Note $note)
-//     {
-//         // Check if user has permission to edit
-//         if (Gate::allows('update', $note)) {
-//             return view('notes.edit', compact('note'));
-//         } else {
-//             abort(403, 'Unauthorized action.');
-//         }
-//     }
-
-//     public function update(Request $request, Note $note)
-//     {
-//         // Check if user has permission to update
-//         if (Gate::allows('update', $note)) {
-//             // Validation
-//             $request->validate([
-//                 'name' => 'required',
-//                 'description' => 'required',
-//             ]);
-
-//             // Update the note
-//             $note->update([
-//                 'name' => $request->input('name'),
-//                 'description' => $request->input('description'),
-//             ]);
-
-//             return redirect()->route('notes.index')->with('success', 'Note updated successfully.');
-//         } else {
-//             abort(403, 'Unauthorized action.');
-//         }
-//     }
-
-//     public function destroy(Note $note)
-//     {
-//         // Check if user has permission to delete
-//         if (Gate::allows('delete', $note)) {
-//             $note->delete();
-//             return redirect()->route('notes.index')->with('success', 'Note deleted successfully.');
-//         } else {
-//             abort(403, 'Unauthorized action.');
-//         }
-//     }
-// }

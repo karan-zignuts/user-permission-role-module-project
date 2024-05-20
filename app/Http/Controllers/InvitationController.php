@@ -8,27 +8,35 @@ use Illuminate\Support\Facades\Auth;
 
 class InvitationController extends Controller
 {
-  public function acceptInvite($token)
-  {
-    $pageConfigs = ['myLayout' => 'blank'];
+    // This function is used for accepting an invitation from admin to user
+    public function acceptInvite($token)
+    {
+        // Define layout configuration for the view
+        $pageConfigs = ['myLayout' => 'blank'];
 
-    $user = User::where('invitation_token', $token)->firstOrFail();
-    return view('set_password', compact('token', 'pageConfigs'));
-  }
+        // Find the user with the given invitation token or fail if not found
+        $user = User::where('invitation_token', $token)->firstOrFail();
 
-  public function setPassword(Request $request)
-  {
-      $request->validate([
-          'password' => 'required|min:6|confirmed',
-          'token' => 'required'
-      ]);
+        // Return the set password view with the token and page configuration
+        return view('set_password', compact('token', 'pageConfigs'));
+    }
 
-      $user = User::where('invitation_token', $request->token)->firstOrFail();
-      $user->password = bcrypt($request->password);
-      $user->invitation_token = null;
-      $user->save();
+    // This function is used by the user to set their password
+    public function setPassword(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'password' => 'required|min:6|confirmed',
+            'token'    => 'required',
+        ]);
 
-      return redirect()->route('auth-login-basic')->with('success', 'Password set successfully!');
-  }
+        // Find the user with the given invitation token or fail if not found
+        $user = User::where('invitation_token', $request->token)->firstOrFail();
+        $user->password = bcrypt($request->password);
+        $user->invitation_token = null;
+        $user->save();
 
+        // Redirect to the login page with a success message
+        return redirect()->route('auth-login-basic')->with('success', 'Password set successfully!');
+    }
 }

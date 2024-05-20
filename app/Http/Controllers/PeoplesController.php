@@ -8,84 +8,24 @@ use Illuminate\Support\Facades\Auth;
 
 class PeoplesController extends Controller
 {
-    // public function index(Request $request)
-    // {
-    //     // dd($request);
-    //     $people = People::all();
-
-    //     return view('/contact/people/people_index', compact('people'));
-    // }
-
-    // public function create()
-    // {
-    //     return view('/contact/people/people_create');
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     if (!$request->user()->hasUserAccess('1.2', 'add')) {
-    //         return abort(403, 'Unauthorized');
-    //     }
-    //     $validatedData = $request->validate([
-    //         'name' => 'required',
-    //         'designation' => 'required',
-    //         'address' => 'required',
-    //         'contact_no' => 'required',
-    //         'email' => 'required|email',
-    //     ]);
-
-    //     People::create($validatedData);
-
-    //     return redirect()->route('/contact/people/people_index');
-    // }
-
-    // public function edit($id)
-    // {
-    //     // Implement permissions check here
-    //     $person = People::findOrFail($id);
-
-    //     return view('people.edit', compact('person'));
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $validatedData = $request->validate([
-    //         'name' => 'required',
-    //         'designation' => 'required',
-    //         'address' => 'required',
-    //         'contact_no' => 'required',
-    //         'email' => 'required|email',
-    //     ]);
-
-    //     $person = People::findOrFail($id);
-    //     $people->update($validatedData);
-
-    //     return redirect()->route('people.index');
-    // }
-
-    // public function destroy($id)
-    // {
-    //     $person = People::findOrFail($id);
-    //     $person->delete();
-
-    //     return redirect()->route('people.index');
-    // }
-
+    // Display a listing of the people
     public function index(Request $request)
     {
+        // Check user permissions for edit, delete, and create actions
         $editBtn = Auth::user()->hasUserAccess(1.2, 'edit');
         $deleteBtn = Auth::user()->hasUserAccess(1.2, 'delete');
         $createBtn = Auth::user()->hasUserAccess(1.2, 'create');
 
+        // Initialize the query for people
         $query = People::query();
 
-        // Search by name
+        // Search by name if the search term is provided
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where('name', 'like', "%$search%");
         }
 
-        // Filter by status
+        // Search by name if the search term is provided
         $status = $request->input('status');
         if ($status === 'active') {
             $query->where('is_active', true);
@@ -93,17 +33,23 @@ class PeoplesController extends Controller
             $query->where('is_active', false);
         }
 
+        // Fetch the people records for the authenticated user and paginate the results
         $people = $query->where('user_id', Auth::id())->paginate(10);
+
+        // Return the people index view with the people data and user permissions
         return view('/contact/people/people_index', compact('people', 'editBtn', 'deleteBtn', 'createBtn'));
     }
 
+    // Show the form for creating a new person
     public function create()
     {
         return view('/contact/people/people_create');
     }
 
+    // Store a newly created person in the database
     public function store(Request $request)
     {
+        // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required',
             'designation' => 'required',
@@ -112,6 +58,7 @@ class PeoplesController extends Controller
             'email' => 'required|email',
         ]);
 
+        // Create a new people with the validated data and associate it with the authenticated user
         People::create([
             'name' => $request->name,
             'designation' => $request->designation,
@@ -121,20 +68,23 @@ class PeoplesController extends Controller
             'user_id' => Auth::User()->id,
         ]);
 
+        // Redirect to the people index page
         return redirect()->route('people.index');
     }
 
+    // Show the form for editing the specified person
     public function edit($id)
     {
-        // dd('hii');
-
         // dd($editBtn);
+        // Find the person by ID or fail if not found
         $person = People::findOrFail($id);
         return view('/contact/people/people_edit', compact('person'));
     }
 
+    // Update the specified person in the database
     public function update(Request $request, $id)
     {
+        // Validate the incoming request data
         $validatedData = $request->validate([
             'name' => 'required',
             'designation' => 'required',
@@ -144,7 +94,10 @@ class PeoplesController extends Controller
         ]);
 
         // dd($validatedData);
+        // Find the person by ID or fail if not found
         $person = People::findOrFail($id);
+
+        // Update the person with the validated data
         $person->update([
             'name' => $request->name,
             'designation' => $request->designation,
@@ -154,22 +107,31 @@ class PeoplesController extends Controller
             'user_id' => Auth::User()->id,
         ]);
 
+        // Redirect to the people index page
         return redirect()->route('people.index');
     }
 
+    // Remove the specified person from the database
     public function destroy($id)
     {
+        // Find the person by ID or fail if not found
         $person = People::findOrFail($id);
+
+        // Delete the person
         $person->delete();
         return redirect()->route('people.index');
     }
+
+    // Update the status of the specified person
     public function updateStatus(Request $request)
     {
+        // Find the person by ID or return error if not found
         $people = People::find($request->person_id);
         if (!$people) {
             return response()->json(['error' => 'People not found'], 404);
         }
 
+        // Update the status of the person
         $people->is_active = $request->status;
         $people->save();
 

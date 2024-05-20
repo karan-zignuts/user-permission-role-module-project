@@ -44,7 +44,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    {{-- <th scope="col">ID</th> --}}
                                     <th scope="col">Name</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Status</th>
@@ -54,7 +53,6 @@
                             <tbody>
                                 @foreach ($roles as $role)
                                     <tr>
-                                        {{-- <th scope="row">{{ $role->id }}</th> --}}
                                         <td>{{ $role->name }}</td>
                                         <td>{{ $role->description }}</td>
                                         <td>
@@ -97,12 +95,9 @@
     </div>
     <script>
         $(document).ready(function() {
-          $('.toggle-class').change(function() {
-            var roleId = $(this).data('role-id');
-            var status = $(this).prop('checked') ? 1 : 0;
-
-            // console.log('hii');
-
+            $('.toggle-class').change(function() {
+                var roleId = $(this).data('role-id');
+                var status = $(this).prop('checked') ? 1 : 0;
                 $.ajax({
                     url: "{{ route('roles.updateStatus') }}",
                     method: 'POST',
@@ -112,11 +107,9 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        // Handle success response
                         console.log(response);
                     },
                     error: function(xhr) {
-                        // Handle error response
                         console.log(xhr.responseText);
                     }
                 });
@@ -139,7 +132,6 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // If user confirms, submit the form
                         $('#deleteRoleForm' + roleId).submit();
                     }
                 });

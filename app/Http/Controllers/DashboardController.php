@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\User;
 class DashboardController extends Controller
 {
+    // Display the dashboard with summary data
     public function index()
     {
         // Define variables
@@ -19,11 +20,10 @@ class DashboardController extends Controller
 
         // Pass variables to the view
         return view('dashboard', [
-          'totalActiveModules'      => $totalActiveModules,
-          'totalActivePermissions'  => $totalActivePermissions,
-          'totalActiveRoles'        => $totalActiveRoles,
-          'totalActiveUsers'        => $totalActiveUsers,
+            'totalActiveModules' => $totalActiveModules,
+            'totalActivePermissions' => $totalActivePermissions,
+            'totalActiveRoles' => $totalActiveRoles,
+            'totalActiveUsers' => $totalActiveUsers,
         ]);
     }
 }
-  

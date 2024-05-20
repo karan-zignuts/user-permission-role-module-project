@@ -28,7 +28,6 @@ use App\Http\Controllers\ActivityController;
 |
 */
 
-// Auth::logout();
 
 //login
 // Public routes
@@ -39,7 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //admin side
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    //permissions
+    //permissions routes
     Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
     Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
     Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
@@ -48,14 +47,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/permissions/{id}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
     Route::post('/permissions/toggleStatus/{permission_id}', [PermissionController::class, 'toggleStatus'])->name('permissions.toggleStatus');
 
-    //Modules
+    //Modules routes
     Route::get('/modules', [ModuleController::class, 'index'])->name('modules.index');
     Route::get('/modules/edit/{module}', [ModuleController::class, 'edit'])->name('modules.edit');
     Route::put('/modules/{module}', [ModuleController::class, 'update'])->name('modules.update');
     Route::get('changeStatus', [ModuleController::class, 'changeStatus']);
     Route::put('modules/toggleStatus/{submoduleId}', [ModuleController::class, 'toggleStatus'])->name('modules.toggleStatus');
 
-    //roles
+    //roles routes
     Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
     Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
     Route::get('/roles/edit/{id}', [RoleController::class, 'edit'])->name('roles.edit');
@@ -64,7 +63,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/roles/update/{id}', [RoleController::class, 'update'])->name('roles.update');
     Route::post('/roles/updateStatus', [RoleController::class, 'updateStatus'])->name('roles.updateStatus');
 
-    //user controller for admin side
+    //user controller route for admin side
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UsersController::class, 'create'])->name('users.create');
     Route::get('/users/{user}/edit', [UsersController::class, 'edit'])->name('users.edit');
@@ -76,8 +75,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/reset-password/{userId}', [UsersController::class, 'resetPassword'])->name('user.resetPassword');
     Route::post('/force-logout/{userId}', [UsersController::class, 'forceLogout'])->name('forceLogout');
 
-    //userside
-    //userside controller for user
+    //userside routes
+    //userside controller route for user side
     Route::get('/user-details', [UserSideController::class, 'show'])->name('userside.details');
     Route::get('/user-details/edit', [UserSideController::class, 'edit'])->name('userside.edit');
     Route::post('/user-details/update', [UserSideController::class, 'update'])->name('userside.update');
@@ -97,8 +96,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/companies/edit/{company}', [CompanyController::class, 'edit'])->name('companies.edit')->middleware('access:1.1,edit');
     Route::put('/companies/{company}', [CompanyController::class, 'update'])->name('companies.update')->middleware('access:1.1,edit');
     Route::delete('/companies/{company}', [CompanyController::class, 'destroy'])->name('companies.destroy')->middleware('access:1.1,delete');
-    // Route::get('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
-    // Route::post('/companies', [CompanyController::class, 'store'])->name('companies.store');
+
 
     //people route
     Route::get('/people', [PeoplesController::class, 'index'])->name('people.index')->middleware('access:1.2,view');
@@ -108,9 +106,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/people/update/{id}', [PeoplesController::class, 'update'])->name('people.update')->middleware('access:1.2,edit');
     Route::delete('/people/delete/{id}', [PeoplesController::class, 'destroy'])->name('people.destroy')->middleware('access:1.2,delete');
     Route::post('/people/updateStatus', [PeoplesController::class, 'updateStatus'])->name('people.updateStatus')->middleware('access:1.2,edit');
-    // Route::get('/people/create', [PeoplesController::class, 'create'])->name('people.create');
-    // Route::post('/people/store', [PeoplesController::class, 'store'])->name('people.store');
-
 
 
     //Notes route
@@ -121,10 +116,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/notes/edit/{note}', [NoteController::class, 'edit'])->name('notes.edit')->middleware('access:2.1,edit');
     Route::put('/notes/{note}', [NoteController::class, 'update'])->name('notes.update')->middleware('access:2.1,edit');
     Route::delete('/notes/{note}', [NoteController::class, 'destroy'])->name('notes.destroy')->middleware('access:2.1,delete');
-    // Route::get('/notes/create', [NoteController::class, 'create'])->name('notes.create');
-    // Route::post('/notes', [NoteController::class, 'store'])->name('notes.store');
-    // Route::get('/notes/edit/{note}', [NoteController::class, 'edit'])->name('notes.edit');
-    // Route::put('/notes/{note}', [NoteController::class, 'update'])->name('notes.update');
+
 
 
     //activity route
@@ -135,8 +127,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/activities/{activity}', [ActivityController::class, 'update'])->name('activities.update')->middleware('access:2.2,edit');
     Route::delete('/activities/{activity}', [ActivityController::class, 'destroy'])->name('activities.destroy')->middleware('access:2.2,delete');
     Route::post('/activities/updateStatus', [ActivityController::class, 'updateStatus'])->name('activities.updateStatus')->middleware('access:2.2,edit');
-    // Route::get('/activities/create', [ActivityController::class, 'create'])->name('activities.create');
-    // Route::post('/activities', [ActivityController::class, 'store'])->name('activities.store');
+
 
     // Meetings routes
     Route::get('/meetings', [MeetingController::class, 'index'])->name('meetings.index')->middleware('access:2.3,view');
@@ -146,9 +137,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/meetings/{meeting}/update', [MeetingController::class, 'update'])->name('meetings.update')->middleware('access:2.3,edit');
     Route::delete('/meetings/{meeting}/delete', [MeetingController::class, 'destroy'])->name('meetings.destroy')->middleware('access:2.3,delete');
     Route::post('/meetings/updateStatus', [MeetingController::class, 'updateStatus'])->name('meetings.updateStatus')->middleware('access:2.3,edit');
-    // Route::get('/meetings/create', [MeetingController::class, 'create'])->name('meetings.create');
-    // Route::post('/meetings/store', [MeetingController::class, 'store'])->name('meetings.store');
-
 
 });
 
@@ -156,5 +144,3 @@ Route::post('/logout', function () {
     auth()->logout();
     return redirect()->route('auth-login-basic');
 })->name('logout');
-
-

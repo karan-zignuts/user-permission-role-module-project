@@ -13,9 +13,12 @@
                         <h3>User Management</h3>
                     </div>
                     <div class="card-body">
-
+                        @if (session('success'))
+                            <div id="successMessage" class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Create New User</a>
-
                         <form action="{{ route('users.index') }}" method="GET" class="mb-4" id="filterForm">
                             <div class="row">
                                 <div class="col-md-4">
@@ -122,9 +125,7 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-
                         </table>
-
                         <div id="pagination" class="pt-2">
                             {{ $users->links() }}
                         </div>
@@ -140,7 +141,6 @@
             var userTable = document.getElementById('userTable').getElementsByTagName('tbody')[0]
                 .getElementsByTagName('tr');
 
-            // Add event listener for search input
             filterForm.addEventListener('submit', function(event) {
                 event.preventDefault(); // Prevent form submission
                 var formData = new FormData(filterForm);
@@ -151,7 +151,6 @@
                     var name = row.getElementsByTagName('td')[0].textContent.toLowerCase();
                     var rowStatus = row.dataset.status;
 
-                    // Check if the name contains the search text and matches the status filter
                     if ((search === '' || name.includes(search)) && (status === 'all' ||
                             rowStatus === status)) {
                         row.style.display = '';
@@ -189,40 +188,47 @@
     </script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-    <!-- Add this line to include SweetAlert styles -->
     <link rel="stylesheet" href="https://unpkg.com/sweetalert/dist/sweetalert.css">
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-          const deleteButtons = document.querySelectorAll('.delete-btn');
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
 
-          deleteButtons.forEach(button => {
-              button.addEventListener('click', function(event) {
-                  event.preventDefault(); // Prevent the default form submission
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const userId = event.target.getAttribute('data-user-id');
+                    const userName = event.target.getAttribute('data-user-name');
 
-                  const userId = event.target.getAttribute('data-user-id');
-                  const userName = event.target.getAttribute('data-user-name');
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            console.log('Deleting user:', userId);
+                            button.disabled =
+                                true;
+                            document.getElementById('deleteForm' + userId).submit();
+                        } else {
+                            console.log('Deletion canceled.'); // Debug message
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 
-                  Swal.fire({
-                      title: 'Are you sure?',
-                      text: "You won't be able to revert this!",
-                      icon: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#d33',
-                      cancelButtonColor: '#3085d6',
-                      confirmButtonText: 'Yes, delete it!'
-                  }).then((result) => {
-                      if (result.isConfirmed) {
-                          console.log('Deleting user:', userId); // Debug message
-                          button.disabled = true; // Disable the button to prevent multiple clicks
-                          document.getElementById('deleteForm' + userId).submit();
-                      } else {
-                          console.log('Deletion canceled.'); // Debug message
-                      }
-                  });
-              });
-          });
-      });
-  </script>
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 3000);
+    </script>
 @endsection

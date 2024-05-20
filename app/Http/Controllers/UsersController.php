@@ -14,22 +14,14 @@ use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
-    // Show list of all users
-    // public function index(Request $request)
-    // {
-    //     $users = User::paginate(10);
-    //     return view('users.index', compact('users'));
-    // }
-
+    // Display a list of users
     public function index(Request $request)
     {
         // Get the authenticated user
         $authenticatedUser = auth()->user();
 
-        // Check if the authenticated user is "hardik@gmail.com"
+        // Check if the authenticated user is "hardik@gmail.com" (hardik@gmail.com is admin)
         if ($authenticatedUser->email === 'hardik@gmail.com') {
-            // If the user is "hardik@gmail.com",
-            // proceed without checking permissions
             $users = User::paginate(10);
         } else {
             // If not, check if the user has permission to view users
@@ -45,19 +37,10 @@ class UsersController extends Controller
     }
 
     // Show user creation form
-    // public function create()
-    // {
-    //     $roles = Role::all();
-    //     return view('users.create', compact('roles'));
-    // }
-
     public function create()
     {
         // Get the authenticated user's email
         $userEmail = auth()->user()->email;
-
-        // Define the email address that should have special access
-        // $allowedEmail = 'hardik@gmail.com';
 
         // Check if the authenticated user's email matches the allowed email
         if ($userEmail !== 'hardik@gmail.com') {
@@ -69,54 +52,10 @@ class UsersController extends Controller
         return view('users.create', compact('roles'));
     }
 
-    // public function store(Request $request)
-    // {
-    //     if (!auth()->user()->hasPermissionTo('create_users')) {
-    //         abort(403, 'Unauthorized');
-    //     }
-    //     // Validate input
-    //     $request->validate(
-    //         [
-    //             'first_name' => 'required|string',
-    //             'last_name' => 'required|string',
-    //             'email' => 'required|email|unique:users,email',
-    //             'roles' => 'required|array',
-    //             'contact_no' => 'nullable|string',
-    //             'address' => 'nullable|string',
-    //         ],
-    //         [
-    //             'email.unique' => 'The email address is already taken.',
-    //         ],
-    //     );
-
-    //     // Generate invitation token
-    //     $token = Str::random(32); // Generate a random string for the token
-
-    //     // Create user in the database with invitation token
-    //     $user = User::create([
-    //         'first_name' => $request->first_name,
-    //         'last_name' => $request->last_name,
-    //         'email' => $request->email,
-    //         'phone_number' => $request->contact_no,
-    //         'address' => $request->address,
-    //         'invitation_token' => $token,
-    //     ]);
-
-    //     $user->roles()->attach($request->roles);
-
-    //     // Send invitation email with the invitation token
-    //     Mail::to($request->email)->send(new InviteEmail($user, $token));
-
-    //     return redirect()->route('users.index')->with('success', 'User created successfully and invitation email sent.');
-    // }
-
     public function store(Request $request)
     {
         // Get the authenticated user's email
         $userEmail = auth()->user()->email;
-
-        // Define the email address that should have special access
-        // $allowedEmail = 'hardik@gmail.com';
 
         // Check if the authenticated user's email matches the allowed email
         if ($userEmail !== 'hardik@gmail.com') {
@@ -161,21 +100,10 @@ class UsersController extends Controller
         return redirect()->route('users.index')->with('success', 'User created successfully and invitation email sent.');
     }
 
-    // public function edit($id)
-    // {
-    //     $user = User::findOrFail($id); // Assuming you have a User model
-    //     $roles = Role::all(); // Assuming you have a Role model
-
-    //     return view('users.edit', compact('user', 'roles'));
-    // }
-
     public function edit($id)
     {
         // Check if the authenticated user has permission to edit users
         $userEmail = auth()->user()->email;
-
-        // Define the email address that should have special access
-        // $allowedEmail = 'hardik@gmail.com';
 
         // Check if the authenticated user's email matches the allowed email
         if ($userEmail !== 'hardik@gmail.com') {
@@ -191,9 +119,6 @@ class UsersController extends Controller
     {
         $userEmail = auth()->user()->email;
 
-        // Define the email address that should have special access
-        // $allowedEmail = 'hardik@gmail.com';
-
         // Check if the authenticated user's email matches the allowed email
         if ($userEmail !== 'hardik@gmail.com') {
             abort(403, 'Unauthorized');
@@ -204,8 +129,9 @@ class UsersController extends Controller
 
         // Update the user's attributes
         $user->update([
-            'first_name' => $request->input('name'),
-            'phone_number' => $request->input('contact'),
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'phone_number' => $request->input('contact_no'),
             'address' => $request->input('address'),
         ]);
 
@@ -216,19 +142,9 @@ class UsersController extends Controller
     }
 
     // Delete user
-    // public function destroy(User $user)
-    // {
-    //     $user->delete();
-
-    //     return redirect()->route('users.index')->with('success', 'User deleted successfully!');
-    // }
-
     public function destroy(User $user)
     {
         $userEmail = auth()->user()->email;
-
-        // Define the email address that should have special access
-        // $allowedEmail = 'hardik@gmail.com';
 
         // Check if the authenticated user's email matches the allowed email
         if ($userEmail !== 'hardik@gmail.com') {
@@ -278,11 +194,13 @@ class UsersController extends Controller
         // Send email notification
         Mail::to($user->email)->send(new PasswordResetNotification($user));
 
-        return redirect()->back()->with('success', 'Password reset successfully and notification sent to the user.');
+        return redirect()->route('users.index')->with('success', 'Password reset successfully and notification sent to the user.');
     }
 
+    // Force logout user
     public function forceLogout($userId)
     {
+        // Find the user by ID
         $user = User::findOrFail($userId);
 
         // Invalidate all user sessions

@@ -1,7 +1,7 @@
 @extends('layouts/layoutMaster')
 
 @section('content')
-<form method="POST" action="{{ route('auth.login') }}">
+<form method="POST" action="{{ route('auth-login-basic')  }}">
   @csrf
   <input type="email" name="email" placeholder="Email" required>
   <input type="password" name="password" placeholder="Password" required>
