@@ -1,3 +1,8 @@
+<?php
+    $configData = Helper::appClasses();
+?>
+
+
 <?php $__env->startSection('content'); ?>
     <div class="container">
         <div class="card">

@@ -20,7 +20,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="owner_name" class="form-label">Owner's Name</label>
-                        <input type="text" class="form-control" id="owner_name" name="owner_name" placeholder="Owner's Name">
+                        <input type="text" class="form-control" id="owner_name" name="owner_name"
+                            placeholder="Owner's Name">
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Address</label>

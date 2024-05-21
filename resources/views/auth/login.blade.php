@@ -1,4 +1,4 @@
-@extends('layouts/layoutMaster')
+{{-- @extends('layouts/layoutMaster')
 
 @section('content')
 <form method="POST" action="{{ route('auth-login-basic')  }}">
@@ -7,4 +7,4 @@
   <input type="password" name="password" placeholder="Password" required>
   <button type="submit">Login</button>
 </form>
-@endsection
+@endsection --}}

@@ -35,6 +35,8 @@ Route::get('/', [LoginBasic::class, 'index'])->name('auth-login-basic');
 Route::post('/login', [LoginBasic::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
+
+
     //admin side
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

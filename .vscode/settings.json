@@ -11,8 +11,8 @@
     "*.min.js": true,
     "*.min.css": true
   },
-  // JS
-  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  "javascript.updateImportsOnFileMove.enabled": "always", //JS
   // JSON
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
