@@ -51,8 +51,9 @@
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                 <div class="avatar avatar-online">
-                    <img src="<?php echo e(Auth::user() ? Auth::user()->profile_photo_url : asset('/public/assets/img/avatars/10.png')); ?>"
-                        alt class="w-px-40 h-auto rounded-circle">
+                    
+                    <img src="<?php echo e(asset('assets/img/avatars/14.png')); ?>" alt="User Image"
+                        class="d-block img-fluid rounded-circle mb-3">
                 </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -62,15 +63,16 @@
                         <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar avatar-online">
-                                    <img src="<?php echo e(Auth::user() ? Auth::user()->profile_photo_url : asset('/public/assets/img/avatars/1.png')); ?>"
-                                        alt class="w-px-40 h-auto rounded-circle">
+                                    
+
+                                    <img src="<?php echo e(asset('assets/img/avatars/14.png')); ?>" alt="User Image"
+                                        class="d-block img-fluid rounded-circle mb-3">
                                 </div>
                             </div>
                             <div class="flex-grow-1">
                                 <span class="fw-semibold d-block">
                                     <?php if(Auth::check()): ?>
-                                        <?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?>
-
+                                        <?php echo e(Auth::user()->first_name); ?> <?php echo e(Auth::user()->last_name); ?> 
                                     <?php else: ?>
                                         John
                                     <?php endif; ?>
@@ -98,16 +100,7 @@
                         </a>
                     </li>
                 <?php endif; ?>
-                <li>
-                    <a class="dropdown-item" href="javascript:void(0);">
-                        <span class="d-flex align-items-center align-middle">
-                            <i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
-                            <span class="flex-grow-1 align-middle">Billing</span>
-                            <span
-                                class="flex-shrink-0 badge badge-center rounded-pill bg-label-danger w-px-20 h-px-20">2</span>
-                        </span>
-                    </a>
-                </li>
+                
                 <?php if(Auth::User() && Laravel\Jetstream\Jetstream::hasTeamFeatures()): ?>
                     <li>
                         <div class="dropdown-divider"></div>
@@ -166,8 +159,7 @@
                     </form>
                 <?php else: ?>
                     <li>
-                        <a class="dropdown-item"
-                            href="<?php echo e(Route::has('login') ? route('login') : url('/')); ?>">
+                        <a class="dropdown-item" href="<?php echo e(Route::has('login') ? route('login') : url('/')); ?>">
                             <i class='ti ti-login me-2'></i>
                             <span class="align-middle">Login</span>
                         </a>
