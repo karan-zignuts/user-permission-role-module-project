@@ -12,6 +12,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
+        // check if user is not login 
         if (!$request->expectsJson()) {
             session()->flash('error', 'Please Login First!!');
             return route('auth-login-basic');
