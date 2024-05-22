@@ -8,8 +8,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Create New Meeting') }}</div>
+                    <h3 class="card-header">Create New Meeting</h3>
 
+                    {{-- create new meetings and store  --}}
                     <div class="card-body">
                         <form action="{{ route('meetings.store') }}" method="POST">
                             @csrf

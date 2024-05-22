@@ -10,6 +10,7 @@
             <div class="card-header">
                 <h1 class="card-title">Edit Person</h1>
             </div>
+             {{-- edit company by user if user have permission --}}
             <div class="card-body">
                 <form method="post" action="{{ route('companies.update', $company) }}">
                     @csrf

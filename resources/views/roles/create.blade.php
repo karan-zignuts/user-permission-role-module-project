@@ -11,6 +11,8 @@
                     <div class="card-header">
                         <h3>Create Role</h3>
                     </div>
+
+                    {{-- create new role and store data --}}
                     <div class="card-body">
                         <form id="createRoleForm" action="{{ route('roles.store') }}" method="POST">
                             @csrf

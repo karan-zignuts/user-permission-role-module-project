@@ -12,6 +12,7 @@
                     <div class="card-header">
                         <h3>Edit User</h3>
                     </div>
+                    
                     <div class="card-body">
                         <form action="<?php echo e(route('users.update', $user->id)); ?>" method="POST">
                             <?php echo csrf_field(); ?>

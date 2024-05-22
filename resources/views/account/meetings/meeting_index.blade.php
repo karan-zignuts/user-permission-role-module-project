@@ -6,6 +6,7 @@
 @section('content')
     <div class="container">
         <div class="card">
+          {{-- create new meeting button --}}
             <div class="card-header">
                 <h1 class="card-title">Meeting</h1>
                 @if ($createBtn)
@@ -16,7 +17,7 @@
             </div>
 
             <div class="card-body">
-                <!-- Search Bar -->
+              {{-- seach and filter meetings --}}
                 <form action="{{ route('meetings.index') }}" method="GET" class="mb-4">
                     <div class="row">
                         <div class="col-md-4">
@@ -39,7 +40,7 @@
                         </div>
                     </div>
                 </form>
-                <!-- People List -->
+                {{-- show meetings data in table formate like module, description,date,time,status and action button columns --}}
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
@@ -56,6 +57,7 @@
                         </thead>
                         <tbody>
                             @foreach ($meetings as $meeting)
+                             {{-- check user authentication  --}}
                                 @if (Auth::check() && Auth::id() == $meeting->user_id)
                                     <tr>
                                         <td>{{ $meeting->name }}</td>
@@ -72,6 +74,7 @@
                                                     for="flexSwitchCheck{{ $meeting->id }}"></label>
                                             </div>
                                         </td>
+                                        {{-- access edit and delete button if admin give permission --}}
                                         <td>
                                             @if ($editBtn || $deleteBtn)
                                                 @if ($editBtn)
@@ -122,6 +125,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{-- pagination --}}
                     <div id="pagination" class="pt-2">
                         {{ $meetings->links() }}
                     </div>
@@ -145,11 +149,9 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        // Handle success response
                         console.log(response);
                     },
                     error: function(xhr) {
-                        // Handle error response
                         console.log(xhr.responseText);
                     }
                 });

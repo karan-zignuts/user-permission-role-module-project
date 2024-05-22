@@ -42,6 +42,7 @@
     </style>
 </head>
 
+{{-- send notification when password reset by admin  --}}
 <body>
     <div class="container">
         <h1>Password Reset Notification</h1>

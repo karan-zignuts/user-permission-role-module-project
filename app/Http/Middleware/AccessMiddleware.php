@@ -17,11 +17,11 @@ class AccessMiddleware
 
     public function handle(Request $request, Closure $next, $moduleCode, $action)
     {
-      if (Auth::check()) {
-        if ($request->user()->hasUserAccess($moduleCode, $action)) {
-          return $next($request);
+        if (Auth::check()) {
+            if ($request->user()->hasUserAccess($moduleCode, $action)) {
+                return $next($request);
+            }
         }
-      }
         return abort(403, 'Unauthorized');
     }
 }

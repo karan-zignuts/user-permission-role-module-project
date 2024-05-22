@@ -14,6 +14,7 @@
                     <h3><b>
                             <div class="card-header">Edit Permission</div>
                         </b></h3>
+                         {{-- edit permission  --}}
                     <div class="card-body">
                         <form action="{{ route('permissions.update', $permission->id) }}" method="POST" id="permissionsForm">
                             @csrf
@@ -27,6 +28,7 @@
                                 <label for="description">Description:</label>
                                 <textarea id="description" name="description" class="form-control">{{ $permission->description }}</textarea>
                             </div>
+                            {{-- edit/update all modules and it's functionality like create, edit, view and delete --}}
                             <div class="form-group mt-2">
                                 <label>Module-wise Permissions:</label>
                                 <table class="table">

@@ -7,12 +7,14 @@
 <?php $__env->startSection('content'); ?>
     <div class="container">
         <h1 class="mb-4">Notes</h1>
+        
         <?php if($createBtn): ?>
             <a href="<?php echo e(route('notes.create')); ?>" class="btn btn-primary mb-3">Create New</a>
         <?php endif; ?>
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group input-group-sm mb-3">
+                    
                     <form action="<?php echo e(route('notes.index')); ?>" method="GET" class="d-flex">
                         <input type="text" class="form-control mr-3" id="search" name="search"
                             placeholder="Search by notes name" value="<?php echo e(request()->input('search')); ?>">
@@ -33,6 +35,7 @@
                                     <p><?php echo e(Str::limit($note->description, 200)); ?></p>
                                 </div>
                             </div>
+                            
                             <div class="d-flex justify-content-end">
                                 <?php if($editBtn): ?>
                                     <a href="<?php echo e(route('notes.edit', $note->id)); ?>" class="btn btn-sm btn-primary me-2">
@@ -54,6 +57,7 @@
         </div>
 
         <?php $__currentLoopData = $notes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $note): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            
             <?php if(Auth::check() && Auth::id() == $note->user_id): ?>
                 <div class="modal fade" id="deleteModal<?php echo e($note->id); ?>" tabindex="-1"
                     aria-labelledby="deleteModalLabel<?php echo e($note->id); ?>" aria-hidden="true">
@@ -80,6 +84,7 @@
                 </div>
             <?php endif; ?>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        
         <div id="pagination" class="pt-2">
             <?php echo e($notes->links()); ?>
 

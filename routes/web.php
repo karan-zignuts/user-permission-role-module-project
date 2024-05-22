@@ -15,7 +15,6 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ActivityController;
-// use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------

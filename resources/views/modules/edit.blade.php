@@ -13,6 +13,7 @@
                 <div class="card-header">
                     <h4 class="card-title">Update Module</h4>
                 </div>
+                {{-- edit modules --}}
                 <div class="card-body">
                     <form action="{{ route('modules.update', $module) }}" method="POST">
                         @csrf

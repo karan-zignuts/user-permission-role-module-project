@@ -17,8 +17,11 @@
                     <div class="card-header">
                         <h3>Roles</h3>
                     </div>
+                    {{-- create new role button --}}
                     <div class="card-body">
                         <a href="{{ route('roles.create') }}" class="btn btn-primary mb-3">Create New Role</a>
+
+                        {{-- search and filler form  --}}
                         <form action="{{ route('roles.index') }}" method="GET" class="mb-4">
                             <div class="row">
                                 <div class="col-md-4">
@@ -41,6 +44,8 @@
                                 </div>
                             </div>
                         </form>
+
+                        {{-- show role data in table formate like name, description,status and action button columns  --}}
                         <table class="table">
                             <thead>
                                 <tr>
@@ -66,6 +71,7 @@
                                             </div>
                                         </td>
 
+                                        {{-- roles edit and delete button --}}
                                         <td>
                                             <a href="{{ route('roles.edit', $role->id) }}"
                                                 class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> </a>
@@ -85,6 +91,7 @@
                             </tbody>
                         </table>
 
+                        {{-- pagination  --}}
                         <div id="pagination" class="pt-2">
                             {{ $roles->links() }}
                         </div>
@@ -115,9 +122,7 @@
                 });
             });
         });
-    </script>
 
-    <script>
         $(document).ready(function() {
             $('.delete-role-btn').click(function(e) {
                 e.preventDefault();

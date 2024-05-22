@@ -19,7 +19,10 @@
 
                             </div>
                         <?php endif; ?>
+                        
                         <a href="<?php echo e(route('users.create')); ?>" class="btn btn-primary mb-3">Create New User</a>
+
+                        
                         <form action="<?php echo e(route('users.index')); ?>" method="GET" class="mb-4" id="filterForm">
                             <div class="row">
                                 <div class="col-md-4">
@@ -44,6 +47,7 @@
                             </div>
                         </form>
 
+                        
                         <table class="table" id="userTable">
                             <thead>
                                 <tr>
@@ -63,8 +67,8 @@
                                             <?php
                                                 $roles = $user->roles;
                                                 $rolesCount = $roles->count();
-                                                $maxRolesToShow = 3; // Set the maximum number of roles to display without truncation
-                                                $truncatedRoles = $roles->slice(0, $maxRolesToShow); // Get the first X roles
+                                                $maxRolesToShow = 3;
+                                                $truncatedRoles = $roles->slice(0, $maxRolesToShow);
                                                 $remainingRolesCount = $rolesCount - $maxRolesToShow;
                                             ?>
 
@@ -92,6 +96,7 @@
                                                     for="flexSwitchCheckUser<?php echo e($user->id); ?>"></label>
                                             </div>
                                         </td>
+                                        
                                         <td>
                                             <a href="<?php echo e(route('users.edit', $user->id)); ?>"
                                                 class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> </a>
@@ -106,6 +111,7 @@
                                                     <i class="fas fa-trash-alt"></i> </button>
                                             </form>
                                         </td>
+                                        
                                         <td>
                                             <button type="button" id="earningReportsId"
                                                 class="btn btn-primary btn-icon dropdown-toggle hide-arrow"
@@ -129,6 +135,7 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                         </table>
+                        
                         <div id="pagination" class="pt-2">
                             <?php echo e($users->links()); ?>
 
@@ -146,7 +153,7 @@
                 .getElementsByTagName('tr');
 
             filterForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent form submission
+                event.preventDefault();
                 var formData = new FormData(filterForm);
                 var search = formData.get('search').toLowerCase();
                 var status = formData.get('status');
@@ -164,9 +171,8 @@
                 });
             });
         });
-    </script>
 
-    <script>
+
         $(document).ready(function() {
             $('.toggle-user-status').change(function() {
                 var userId = $(this).data('user-id');
@@ -189,12 +195,7 @@
                 });
             });
         });
-    </script>
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/sweetalert/dist/sweetalert.css">
-
-    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const deleteButtons = document.querySelectorAll('.delete-btn');
 
@@ -219,15 +220,13 @@
                                 true;
                             document.getElementById('deleteForm' + userId).submit();
                         } else {
-                            console.log('Deletion canceled.'); // Debug message
+                            console.log('Deletion canceled.');
                         }
                     });
                 });
             });
         });
-    </script>
 
-    <script>
         setTimeout(function() {
             var successMessage = document.getElementById('successMessage');
             if (successMessage) {
@@ -235,6 +234,9 @@
             }
         }, 3000);
     </script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/sweetalert/dist/sweetalert.css">
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('../layouts/layoutMaster', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/ztlab113/Desktop/project /Laravel/user-permission-role-module/resources/views/users/index.blade.php ENDPATH**/ ?>

@@ -5,6 +5,7 @@
 
 <?php $__env->startSection('content'); ?>
     <h1>Company List</h1>
+    
     <?php if($createBtn): ?>
         <a href="<?php echo e(route('companies.create')); ?>" class="btn btn-success mb-4">Create New</a>
     <?php endif; ?>
@@ -12,6 +13,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="input-group input-group-sm mb-3">
+              
                 <form action="<?php echo e(route('companies.index')); ?>" method="GET" class="d-flex">
                     <input type="text" class="form-control mr-3" id="search" name="search"
                         placeholder="Search by notes name" value="<?php echo e(request()->input('search')); ?>">
@@ -80,7 +82,7 @@
             </div>
         <?php endif; ?>
     </div>
-
+    
     <div id="pagination" class="pt-2">
         <?php echo e($companies->links()); ?>
 

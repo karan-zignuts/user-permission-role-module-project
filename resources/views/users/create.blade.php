@@ -12,6 +12,7 @@
                     <div class="card-header">
                         <h1 class="card-title">Create User</h1>
                     </div>
+                    {{-- create new user and store users data --}}
                     <div class="card-body">
                         <form method="POST" action="{{ route('users.store') }}">
                             @csrf

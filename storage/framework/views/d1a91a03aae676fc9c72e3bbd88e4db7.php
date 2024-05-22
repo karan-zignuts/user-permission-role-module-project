@@ -18,8 +18,11 @@
                     <div class="card-header">
                         <h3>Roles</h3>
                     </div>
+                    
                     <div class="card-body">
                         <a href="<?php echo e(route('roles.create')); ?>" class="btn btn-primary mb-3">Create New Role</a>
+
+                        
                         <form action="<?php echo e(route('roles.index')); ?>" method="GET" class="mb-4">
                             <div class="row">
                                 <div class="col-md-4">
@@ -42,6 +45,8 @@
                                 </div>
                             </div>
                         </form>
+
+                        
                         <table class="table">
                             <thead>
                                 <tr>
@@ -67,6 +72,7 @@
                                             </div>
                                         </td>
 
+                                        
                                         <td>
                                             <a href="<?php echo e(route('roles.edit', $role->id)); ?>"
                                                 class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> </a>
@@ -86,6 +92,7 @@
                             </tbody>
                         </table>
 
+                        
                         <div id="pagination" class="pt-2">
                             <?php echo e($roles->links()); ?>
 
@@ -117,9 +124,7 @@
                 });
             });
         });
-    </script>
 
-    <script>
         $(document).ready(function() {
             $('.delete-role-btn').click(function(e) {
                 e.preventDefault();

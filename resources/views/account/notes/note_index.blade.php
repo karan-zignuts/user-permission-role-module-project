@@ -7,12 +7,14 @@
 @section('content')
     <div class="container">
         <h1 class="mb-4">Notes</h1>
+        {{-- create new note button --}}
         @if ($createBtn)
             <a href="{{ route('notes.create') }}" class="btn btn-primary mb-3">Create New</a>
         @endif
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group input-group-sm mb-3">
+                    {{-- seach notes --}}
                     <form action="{{ route('notes.index') }}" method="GET" class="d-flex">
                         <input type="text" class="form-control mr-3" id="search" name="search"
                             placeholder="Search by notes name" value="{{ request()->input('search') }}">
@@ -33,6 +35,7 @@
                                     <p>{{ Str::limit($note->description, 200) }}</p>
                                 </div>
                             </div>
+                            {{-- access edit and delete button if admin give permission --}}
                             <div class="d-flex justify-content-end">
                                 @if ($editBtn)
                                     <a href="{{ route('notes.edit', $note->id) }}" class="btn btn-sm btn-primary me-2">
@@ -54,6 +57,7 @@
         </div>
 
         @foreach ($notes as $note)
+            {{-- check user authentication  --}}
             @if (Auth::check() && Auth::id() == $note->user_id)
                 <div class="modal fade" id="deleteModal{{ $note->id }}" tabindex="-1"
                     aria-labelledby="deleteModalLabel{{ $note->id }}" aria-hidden="true">
@@ -80,6 +84,7 @@
                 </div>
             @endif
         @endforeach
+        {{-- pagination --}}
         <div id="pagination" class="pt-2">
             {{ $notes->links() }}
         </div>

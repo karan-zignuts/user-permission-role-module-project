@@ -24,11 +24,10 @@ class MenuServiceProvider extends ServiceProvider
    */
   public function boot(): void
   {
+    //this is used for both admin and user menu it's take json data from verticalMenu.json
     $verticalMenuJson = file_get_contents(base_path('resources/menu/verticalMenu.json'));
     $verticalMenuData = json_decode($verticalMenuJson);
 
     \View::share('menuData', $verticalMenuData);
   }
 }
-
-

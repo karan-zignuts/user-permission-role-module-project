@@ -10,6 +10,7 @@
             <div class="card-header">
                 <h2 class="card-title">Edit Meeting</h2>
             </div>
+            {{-- edit meetings by user if user have permission --}}
             <div class="card-body">
                 <form action="{{ route('meetings.update', $meeting) }}" method="POST">
                     @csrf

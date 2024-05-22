@@ -10,6 +10,7 @@
                 <h1 class="card-title">Edit Person</h1>
             </div>
             <div class="card-body">
+              {{-- edit people by user if user have permission --}}
                 <form method="post" action="{{ route('people.update', $person->id) }}">
                     @csrf
                     @method('PUT')

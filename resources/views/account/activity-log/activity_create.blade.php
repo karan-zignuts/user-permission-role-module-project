@@ -10,6 +10,7 @@
             <div class="card-header">
                 <h1 class="card-title">Create New Activity</h1>
             </div>
+            {{-- create new activity log  --}}
             <div class="card-body">
                 <form action="{{ url('/activities') }}" method="POST">
                     @csrf

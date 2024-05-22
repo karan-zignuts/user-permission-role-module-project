@@ -36,17 +36,17 @@
                     <div class="card-body">
                         <!-- Logo -->
                         <!-- <div class="app-brand justify-content-center mb-4 mt-2">
-                                    <a href="{{ url('/') }}" class="app-brand-link gap-2">
-                                        <span class="app-brand-logo demo">@include('_partials.macros', [
-                                            'height' => 20,
-                                            'withbg' => 'fill: #fff;',
-                                        ])</span>
-                                        <span class="app-brand-text demo text-body fw-bold ms-1">{{ config('variables.templateName') }}</span>
-                                    </a>
-                                </div> -->
+                                        <a href="{{ url('/') }}" class="app-brand-link gap-2">
+                                            <span class="app-brand-logo demo">@include('_partials.macros', [
+                                                'height' => 20,
+                                                'withbg' => 'fill: #fff;',
+                                            ])</span>
+                                            <span class="app-brand-text demo text-body fw-bold ms-1">{{ config('variables.templateName') }}</span>
+                                        </a>
+                                    </div> -->
                         <!-- /Logo -->
                         <!-- <h4 class="mb-1 pt-2">Welcome to {{ config('variables.templateName') }}! 👋</h4>
-                                <p class="mb-4">Please sign-in to your account and start the adventure</p> -->
+                                    <p class="mb-4">Please sign-in to your account and start the adventure</p> -->
                         <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
                             @csrf
                             <div class="mb-3">
@@ -72,7 +72,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="remember-me" name="remember">
                                     <label class="form-check-label" for="remember-me">
-                                        Remember Me 
+                                        Remember Me
                                     </label>
                                 </div>
                             </div>

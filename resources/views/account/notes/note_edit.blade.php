@@ -6,7 +6,7 @@
 @section('content')
     <div class="container">
         <h1 class="mb-4">Edit Note</h1>
-
+        {{-- edit notes by user if user have permission --}}
         <div class="card ">
             <div class="card-body">
                 <form action="{{ route('notes.update', $note) }}" method="POST">

@@ -14,6 +14,7 @@
                     <h3><b>
                             <div class="card-header">Edit Permission</div>
                         </b></h3>
+                         
                     <div class="card-body">
                         <form action="<?php echo e(route('permissions.update', $permission->id)); ?>" method="POST" id="permissionsForm">
                             <?php echo csrf_field(); ?>
@@ -27,6 +28,7 @@
                                 <label for="description">Description:</label>
                                 <textarea id="description" name="description" class="form-control"><?php echo e($permission->description); ?></textarea>
                             </div>
+                            
                             <div class="form-group mt-2">
                                 <label>Module-wise Permissions:</label>
                                 <table class="table">

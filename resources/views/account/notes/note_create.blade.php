@@ -10,7 +10,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <h2 class="card-header">Create New Note</h2>
-
+                  {{-- create new notes --}}
                     <div class="card-body">
                         <form action="{{ route('notes.store') }}" method="POST">
                             @csrf

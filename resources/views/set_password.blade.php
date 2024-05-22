@@ -10,6 +10,7 @@
                 <div class="card">
                     <div class="card-header">Welcome! Set Your Password</div>
 
+                    {{-- user set password --}}
                     <div class="card-body">
                         <form method="POST" action="{{ route('setpassword') }}">
                             @csrf

@@ -17,10 +17,13 @@
                         <h3>Permissions</h3>
                     </div>
                     <div class="card-body">
+
+                        {{-- create new permission button --}}
                         <a href="{{ route('permissions.create') }}" class="btn btn-primary mb-4"><i class="fas fa-plus"></i>
                             Create New
                             Permission</a>
 
+                        {{-- search and filler form  --}}
                         <form action="{{ route('permissions.index') }}" method="GET" class="mb-4">
                             <div class="row">
                                 <div class="col-md-4">
@@ -45,6 +48,7 @@
                             </div>
                         </form>
 
+                        {{-- show permission data in table formate like name, description,status and action button columns --}}
                         <div class="table-responsive mb-2">
                             <table class="table table-striped permissions-table">
                                 <thead>
@@ -87,6 +91,8 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        {{-- pagination  --}}
                         <div id="pagination" class="pt-2">
                             {{ $permissions->appends(request()->query())->links() }}
                         </div>
@@ -120,11 +126,11 @@
                 });
             });
         });
+
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.delete-permission-btn').forEach(function(button) {
                 button.addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent the form from submitting
-
+                    event.preventDefault();
                     Swal.fire({
                         title: 'Are you sure?',
                         text: 'You will not be able to recover this permission!',

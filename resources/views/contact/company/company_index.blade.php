@@ -5,6 +5,7 @@
 
 @section('content')
     <h1>Company List</h1>
+    {{-- create new company button --}}
     @if ($createBtn)
         <a href="{{ route('companies.create') }}" class="btn btn-success mb-4">Create New</a>
     @endif
@@ -12,6 +13,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="input-group input-group-sm mb-3">
+              {{-- seach companies --}}
                 <form action="{{ route('companies.index') }}" method="GET" class="d-flex">
                     <input type="text" class="form-control mr-3" id="search" name="search"
                         placeholder="Search by notes name" value="{{ request()->input('search') }}">
@@ -80,7 +82,7 @@
             </div>
         @endforelse
     </div>
-
+    {{-- pagination --}}
     <div id="pagination" class="pt-2">
         {{ $companies->links() }}
     </div>

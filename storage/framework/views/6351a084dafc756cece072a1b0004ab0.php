@@ -13,6 +13,7 @@
                     <div class="card-header">
                         <h2 class="card-title text-center">User Details</h2>
                     </div>
+                    
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 text-center mb-4">
@@ -37,10 +38,9 @@
                                         <div class="mb-3">
                                             <strong>Roles:</strong>
 
-                                                <?php $__currentLoopData = $user->roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <li class="list-inline-item"><?php echo e($role->name); ?></li>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
+                                            <?php $__currentLoopData = $user->roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <li class="list-inline-item"><?php echo e($role->name); ?></li>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </div>
                                     </div>
                                 </div>

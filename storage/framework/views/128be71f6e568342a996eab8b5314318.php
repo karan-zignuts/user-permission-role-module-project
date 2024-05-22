@@ -9,6 +9,7 @@
             <div class="card-header">
                 <h1 class="card-title">Create New Person</h1>
             </div>
+             
             <div class="card-body">
                 <form action="<?php echo e(route('people.store')); ?>" method="POST">
                     <?php echo csrf_field(); ?>

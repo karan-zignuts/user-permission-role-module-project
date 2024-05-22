@@ -18,7 +18,10 @@
                                 {{ session('success') }}
                             </div>
                         @endif
+                        {{-- create new user button --}}
                         <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Create New User</a>
+
+                        {{-- form for search and filltering  --}}
                         <form action="{{ route('users.index') }}" method="GET" class="mb-4" id="filterForm">
                             <div class="row">
                                 <div class="col-md-4">
@@ -43,6 +46,7 @@
                             </div>
                         </form>
 
+                        {{-- show table for user name, email, role, status and action buttons columns --}}
                         <table class="table" id="userTable">
                             <thead>
                                 <tr>
@@ -62,8 +66,8 @@
                                             @php
                                                 $roles = $user->roles;
                                                 $rolesCount = $roles->count();
-                                                $maxRolesToShow = 3; // Set the maximum number of roles to display without truncation
-                                                $truncatedRoles = $roles->slice(0, $maxRolesToShow); // Get the first X roles
+                                                $maxRolesToShow = 3;
+                                                $truncatedRoles = $roles->slice(0, $maxRolesToShow);
                                                 $remainingRolesCount = $rolesCount - $maxRolesToShow;
                                             @endphp
 
@@ -89,6 +93,7 @@
                                                     for="flexSwitchCheckUser{{ $user->id }}"></label>
                                             </div>
                                         </td>
+                                        {{-- user edit and delete button --}}
                                         <td>
                                             <a href="{{ route('users.edit', $user->id) }}"
                                                 class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> </a>
@@ -103,6 +108,7 @@
                                                     <i class="fas fa-trash-alt"></i> </button>
                                             </form>
                                         </td>
+                                        {{-- user reset and force logout button --}}
                                         <td>
                                             <button type="button" id="earningReportsId"
                                                 class="btn btn-primary btn-icon dropdown-toggle hide-arrow"
@@ -126,6 +132,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{-- pagination --}}
                         <div id="pagination" class="pt-2">
                             {{ $users->links() }}
                         </div>
@@ -142,7 +149,7 @@
                 .getElementsByTagName('tr');
 
             filterForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent form submission
+                event.preventDefault();
                 var formData = new FormData(filterForm);
                 var search = formData.get('search').toLowerCase();
                 var status = formData.get('status');
@@ -160,9 +167,8 @@
                 });
             });
         });
-    </script>
 
-    <script>
+
         $(document).ready(function() {
             $('.toggle-user-status').change(function() {
                 var userId = $(this).data('user-id');
@@ -185,12 +191,7 @@
                 });
             });
         });
-    </script>
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/sweetalert/dist/sweetalert.css">
-
-    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const deleteButtons = document.querySelectorAll('.delete-btn');
 
@@ -215,15 +216,13 @@
                                 true;
                             document.getElementById('deleteForm' + userId).submit();
                         } else {
-                            console.log('Deletion canceled.'); // Debug message
+                            console.log('Deletion canceled.');
                         }
                     });
                 });
             });
         });
-    </script>
 
-    <script>
         setTimeout(function() {
             var successMessage = document.getElementById('successMessage');
             if (successMessage) {
@@ -231,4 +230,7 @@
             }
         }, 3000);
     </script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/sweetalert/dist/sweetalert.css">
 @endsection

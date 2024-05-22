@@ -8,6 +8,7 @@
 
 @section('content')
 
+{{-- admin show all module data  --}}
     <div class="container">
         <div class="row">
             <div class="col-md-3">

@@ -10,6 +10,7 @@
             <div class="card-header">
                 <h2 class="card-title">Change Password</h2>
             </div>
+            {{-- change user password --}}
             <div class="card-body">
                 <form method="POST" action="{{ route('savePassword') }}">
                     @csrf

@@ -12,6 +12,7 @@
                 <div class="card">
                     <div class="card-header">Reset Password</div>
 
+                    {{-- show alert message --}}
                     <div class="card-body">
                         @if (session('success'))
                             <div class="alert alert-success" role="alert">
@@ -19,6 +20,7 @@
                             </div>
                         @endif
 
+                        {{-- user resetform --}}
                         <form method="POST" action="{{ route('user.resetPassword', $user->id) }}">
                             @csrf
 

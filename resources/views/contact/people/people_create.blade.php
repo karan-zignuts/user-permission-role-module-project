@@ -9,6 +9,7 @@
             <div class="card-header">
                 <h1 class="card-title">Create New Person</h1>
             </div>
+            {{-- create new people --}}
             <div class="card-body">
                 <form action="{{ route('people.store') }}" method="POST">
                     @csrf

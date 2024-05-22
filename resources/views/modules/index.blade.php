@@ -9,6 +9,8 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>Modules</h1>
+
+                {{-- modules search and filter  --}}
                 <form action="{{ route('modules.index') }}" method="GET" class="mb-4">
                     <div class="row">
                         <div class="col-md-4">
@@ -43,6 +45,7 @@
                                 </h5>
                             </div>
 
+                            {{-- show modules data in table formate like module, description,status and action button columns --}}
                             <div id="collapse{{ $loop->index }}" class="collapse"
                                 aria-labelledby="heading{{ $loop->index }}" data-parent="#accordionExample">
                                 <div class="card-body">

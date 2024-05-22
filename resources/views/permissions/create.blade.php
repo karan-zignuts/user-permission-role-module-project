@@ -13,6 +13,8 @@
                     <div class="card-header">
                         <h1>Create New Permission</h1>
                     </div>
+
+                    {{-- create new permission and store  --}}
                     <div class="card-body">
                         <form action="{{ route('permissions.store') }}" method="POST" id="createPermissionForm">
                             @csrf
@@ -24,6 +26,8 @@
                                 <label for="description">Description:</label>
                                 <textarea id="description" name="description" class="form-control" rows="3"></textarea>
                             </div>
+
+                            {{-- show all modules and it's functionality like create, edit, view and delete --}}
                             <div class="form-group mt-2">
                                 <label>Module-wise Permissions:</label>
                                 <table class="table">

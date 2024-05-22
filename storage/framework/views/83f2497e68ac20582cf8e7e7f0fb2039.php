@@ -8,7 +8,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header"><?php echo e(__('Create New Meeting')); ?></div>
+                    <h3 class="card-header">Create New Meeting</h3>
 
                     <div class="card-body">
                         <form action="<?php echo e(route('meetings.store')); ?>" method="POST">

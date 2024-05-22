@@ -12,6 +12,7 @@
                     <div class="card-header">
                         <h3>Edit User</h3>
                     </div>
+                    {{-- edit user --}}
                     <div class="card-body">
                         <form action="{{ route('users.update', $user->id) }}" method="POST">
                             @csrf

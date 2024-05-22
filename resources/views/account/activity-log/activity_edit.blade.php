@@ -10,6 +10,7 @@
             <div class="card-header text-white">
                 <h1 class="card-title mb-0">Edit Activity</h1>
             </div>
+            {{-- edit activity log  --}}
             <div class="card-body">
                 <form action="{{ url('/activities/' . $activity->id) }}" method="POST">
                     @csrf

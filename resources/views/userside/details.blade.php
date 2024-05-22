@@ -13,6 +13,7 @@
                     <div class="card-header">
                         <h2 class="card-title text-center">User Details</h2>
                     </div>
+                    {{-- show users details  --}}
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12 text-center mb-4">
@@ -34,10 +35,9 @@
                                         <div class="mb-3">
                                             <strong>Roles:</strong>
 
-                                                @foreach ($user->roles as $role)
-                                                    <li class="list-inline-item">{{ $role->name }}</li>
-                                                @endforeach
-
+                                            @foreach ($user->roles as $role)
+                                                <li class="list-inline-item">{{ $role->name }}</li>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

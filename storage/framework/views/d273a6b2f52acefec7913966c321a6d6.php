@@ -10,6 +10,7 @@
             <div class="card-header">
                 <h1 class="card-title">Create New Activity</h1>
             </div>
+            
             <div class="card-body">
                 <form action="<?php echo e(url('/activities')); ?>" method="POST">
                     <?php echo csrf_field(); ?>
